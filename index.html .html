@@ -1,0 +1,884 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; min-height: 15.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="fr"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;LoveMap — Votre histoire en carte artistique&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&amp;family=Work+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://js.stripe.com/v3/"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>* {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-sizing: border-box;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>:root {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--cream: #FFF8F0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--terracotta: #E07856;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--deep-green: #2F4538;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--warm-sand: #F4E4D7;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--accent-gold: #D4A574;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>--text-dark: #1a1a1a;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Work Sans', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: var(--cream);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-dark);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>line-height: 1.6;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.hero {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>min-height: 70vh;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 4rem 2rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(135deg, var(--warm-sand) 0%, var(--cream) 100%);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.hero::before {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>content: '♥';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 20rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: rgba(224, 120, 86, 0.05);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translate(-50%, -50%) rotate(-15deg);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Playfair Display', serif;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>h1 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Playfair Display', serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: clamp(2.5rem, 8vw, 5rem);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 900;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--terracotta);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.subtitle {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: clamp(1.1rem, 3vw, 1.5rem);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--deep-green);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 300;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 600px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 2rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.price {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 2.5rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 700;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--terracotta);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 1rem 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Playfair Display', serif;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 900px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0 auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 3rem 2rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.section {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: white;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 3rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 2rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 10px 40px rgba(0,0,0,0.06);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.section-title {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Playfair Display', serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 2rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--deep-green);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 1.5rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 0.5rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.emoji {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 2rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.form-group {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 1.5rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>label {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--deep-green);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 0.5rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.05rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>input[type="text"],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>input[type="email"],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>textarea,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>select {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 0.9rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 2px solid var(--warm-sand);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Work Sans', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>input:focus,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>textarea:focus,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>select:focus {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>outline: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-color: var(--terracotta);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 0 0 3px rgba(224, 120, 86, 0.1);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>textarea {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>resize: vertical;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>min-height: 100px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.radio-group,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.checkbox-group {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flex-wrap: wrap;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 0.5rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.radio-option,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.checkbox-option {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 0.5rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 0.7rem 1.2rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 2px solid var(--warm-sand);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 50px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: white;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.radio-option:hover,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.checkbox-option:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-color: var(--terracotta);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: var(--warm-sand);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.radio-option input[type="radio"],</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.checkbox-option input[type="checkbox"] {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.steps-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.step-item {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: var(--warm-sand);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 1.5rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-left: 4px solid var(--terracotta);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.step-number {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 700;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--terracotta);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.2rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 0.5rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.photo-upload {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.photo-input-wrapper {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: inline-block;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.photo-input-btn {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: inline-flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 0.5rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 1rem 2rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: var(--terracotta);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 50px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.05rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.photo-input-btn:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: var(--deep-green);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-2px);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 5px 20px rgba(0,0,0,0.15);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>#photoInput {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.photo-preview {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: grid;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.photo-preview-item {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>aspect-ratio: 1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.photo-preview-item img {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>object-fit: cover;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.remove-photo {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>right: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(255,255,255,0.9);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.2rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.remove-photo:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: var(--terracotta);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.submit-btn {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 1.3rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(135deg, var(--terracotta) 0%, var(--accent-gold) 100%);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.3rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 700;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Playfair Display', serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 2rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.submit-btn:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-3px);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 10px 30px rgba(224, 120, 86, 0.3);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.submit-btn:disabled {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>opacity: 0.6;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: not-allowed;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.loading {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 2rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.loading.active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.spinner {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 4px solid var(--warm-sand);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-top: 4px solid var(--terracotta);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 50px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 50px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: spin 1s linear infinite;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0 auto 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes spin {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>0% { transform: rotate(0deg); }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>100% { transform: rotate(360deg); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.error {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #fee;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-left: 4px solid #c33;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.error.active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.footer {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 3rem 2rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: var(--deep-green);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: var(--cream);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 4rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>@media (max-width: 768px) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>.section {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>padding: 2rem 1.5rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>.step-item {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>padding: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="hero"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h1&gt;LoveMap&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p class="subtitle"&gt;Votre histoire d'amour transformée en carte artistique unique&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="price"&gt;49€&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p style="font-size: 0.95rem; color: var(--deep-green); position: relative; z-index: 1;"&gt;Création sur-mesure • Livraison numérique haute résolution&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;form id="lovemapForm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Section 1: Le Couple --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;&lt;span class="emoji"&gt;🧡&lt;/span&gt; Le Couple&lt;/h2&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label&gt;Email (pour recevoir votre création)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="email" id="email" name="email" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label&gt;Prénom 1&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="prenom1" name="prenom1" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label&gt;Prénom 2&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="prenom2" name="prenom2" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label&gt;Souhaitez-vous faire apparaître une date sur la Love Map ?&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="radio-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label class="radio-option"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="radio" name="dateChoice" value="non" checked&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span&gt;Non&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label class="radio-option"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="radio" name="dateChoice" value="oui"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span&gt;Oui&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group" id="dateInputGroup" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label&gt;Quelle date ? (ex: 14/02/2020, Été 2019, etc.)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="dateLabel" name="dateLabel"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Section 2: Les Étapes --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;&lt;span class="emoji"&gt;🗺️&lt;/span&gt; Les Grandes Étapes&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p style="margin-bottom: 1.5rem; color: var(--deep-green);"&gt;Indiquez 3 à 6 étapes importantes de votre histoire, dans l'ordre chronologique.&lt;/p&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="steps-container" id="stepsContainer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="step-item"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="step-number"&gt;Étape 1&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;label&gt;Lieu (ville, pays, endroit)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="text" class="step-lieu" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;label&gt;Ce que ça représente (quelques mots)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="text" class="step-signification" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="step-item"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="step-number"&gt;Étape 2&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;label&gt;Lieu&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="text" class="step-lieu" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;label&gt;Signification&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="text" class="step-signification" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="step-item"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="step-number"&gt;Étape 3&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;label&gt;Lieu&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="text" class="step-lieu" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;label&gt;Signification&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="text" class="step-signification" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button type="button" class="photo-input-btn" onclick="addStep()" style="margin-top: 1rem;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>➕ Ajouter une étape (max 6)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Section 3: Fil Conducteur --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;&lt;span class="emoji"&gt;🚶‍♀️&lt;/span&gt; Le Fil Conducteur&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label&gt;Comment voulez-vous parcourir votre carte ?&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;select id="filConducteur" name="filConducteur"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="pied"&gt;À pied / en courant&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="velo"&gt;Vélo&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="voiture"&gt;Voiture&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="artiste"&gt;Laisser l'artiste choisir&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="autre"&gt;Autre&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group" id="autreFilGroup" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label&gt;Précisez :&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="autreFilConducteur" name="autreFilConducteur"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Section 4: Style --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;&lt;span class="emoji"&gt;🎨&lt;/span&gt; Style de Dessin&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="radio-group" style="flex-direction: column;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label class="radio-option"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;input type="radio" name="style" value="carte-illustree" checked&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span&gt;&lt;strong&gt;Carte illustrée – naïf chic&lt;/strong&gt;&lt;br&gt;&lt;small&gt;Carte de voyage dessinée à la main, chaleureuse et poétique&lt;/small&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label class="radio-option"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;input type="radio" name="style" value="bd-comics"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span&gt;&lt;strong&gt;Bande dessinée / comics&lt;/strong&gt;&lt;br&gt;&lt;small&gt;Narration en scènes, expressive et vivante&lt;/small&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label class="radio-option"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;input type="radio" name="style" value="lifestyle-bd"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span&gt;&lt;strong&gt;Lifestyle BD contemporain&lt;/strong&gt;&lt;br&gt;&lt;small&gt;Illustration moderne, chic, inspirée du quotidien&lt;/small&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label class="radio-option"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;input type="radio" name="style" value="cinematique"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span&gt;&lt;strong&gt;Cinématique peint&lt;/strong&gt;&lt;br&gt;&lt;small&gt;Style pictural, lumière forte, atmosphère profonde&lt;/small&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label class="radio-option"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;input type="radio" name="style" value="street-art"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span&gt;&lt;strong&gt;Street art / graphique urbain&lt;/strong&gt;&lt;br&gt;&lt;small&gt;Couleurs puissantes, énergie, style mural&lt;/small&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Section 5: Aujourd'hui --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;&lt;span class="emoji"&gt;🌤️&lt;/span&gt; Aujourd'hui&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label&gt;Votre relation aujourd'hui est plutôt :&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="checkbox-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label class="checkbox-option"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="checkbox" name="relationToday" value="aventure"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span&gt;Aventure&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label class="checkbox-option"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="checkbox" name="relationToday" value="complicite"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span&gt;Complicité&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label class="checkbox-option"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="checkbox" name="relationToday" value="famille"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span&gt;Famille&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label class="checkbox-option"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="checkbox" name="relationToday" value="passion"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span&gt;Passion&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label class="checkbox-option"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="checkbox" name="relationToday" value="serenite"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span&gt;Sérénité&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label&gt;Autre (optionnel) :&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" id="relationAutre" name="relationAutre"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Section 6: Phrase Finale --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;&lt;span class="emoji"&gt;✨&lt;/span&gt; Phrase Finale&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="radio-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label class="radio-option"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="radio" name="phraseChoice" value="artiste" checked&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span&gt;Laisser l'artiste choisir&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label class="radio-option"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="radio" name="phraseChoice" value="custom"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span&gt;Proposer la vôtre&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group" id="phraseCustomGroup" style="display: none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label&gt;Votre phrase :&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;textarea id="phraseCustom" name="phraseCustom" rows="3"&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Section 7: Photos --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="section-title"&gt;&lt;span class="emoji"&gt;📷&lt;/span&gt; Photos&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p style="margin-bottom: 1rem; color: var(--deep-green);"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Ajoutez 1 à 4 photos (de vous ensemble, de lieux importants...).<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Les photos servent à comprendre votre énergie et vos silhouettes.</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="photo-upload"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="photo-input-wrapper"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button type="button" class="photo-input-btn" onclick="document.getElementById('photoInput').click()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>📸 Ajouter des photos</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;input type="file" id="photoInput" accept="image/*" multiple&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="photo-preview" id="photoPreview"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Message Final --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="section" style="background: var(--warm-sand); border-left: 4px solid var(--terracotta);"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p style="font-style: italic; line-height: 1.8;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>💬 &lt;strong&gt;Message de fin&lt;/strong&gt;&lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Votre Love Map est une œuvre artistique. Elle ne cherche pas l'exactitude, mais la justesse.</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="error" id="errorMsg"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="loading" id="loading"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="spinner"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p&gt;Création de votre commande en cours...&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button type="submit" class="submit-btn" id="submitBtn"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Commander ma LoveMap — 49€</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/form&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="footer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;✨ Chaque LoveMap est unique et créée avec amour ✨&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p style="margin-top: 0.5rem; opacity: 0.8; font-size: 0.9rem;"&gt;Livraison sous 7 à 10 jours • Format numérique haute résolution&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// =============================================</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// CONFIGURATION - À MODIFIER</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// =============================================</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const CONFIG = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>STRIPE_PUBLIC_KEY: 'pk_test_VOTRE_CLE_PUBLIQUE_STRIPE', // Remplace par ta vraie clé</p>
+<p class="p1"><span class="Apple-converted-space">            </span>GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/VOTRE_SCRIPT_ID/exec', // Remplace par ton URL de script</p>
+<p class="p1"><span class="Apple-converted-space">            </span>PRICE_IN_CENTS: 4900 // 49€ = 4900 centimes</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// =============================================</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// GESTION DU FORMULAIRE</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// =============================================</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let photoFiles = [];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let stepCount = 3;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Afficher/masquer le champ date</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.querySelectorAll('input[name="dateChoice"]').forEach(radio =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>radio.addEventListener('change', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('dateInputGroup').style.display =<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>e.target.value === 'oui' ? 'block' : 'none';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Afficher/masquer "autre fil conducteur"</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('filConducteur').addEventListener('change', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('autreFilGroup').style.display =<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>e.target.value === 'autre' ? 'block' : 'none';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Afficher/masquer phrase custom</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.querySelectorAll('input[name="phraseChoice"]').forEach(radio =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>radio.addEventListener('change', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('phraseCustomGroup').style.display =<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>e.target.value === 'custom' ? 'block' : 'none';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Ajouter une étape</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function addStep() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (stepCount &gt;= 6) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>alert('Maximum 6 étapes');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>stepCount++;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const container = document.getElementById('stepsContainer');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const stepDiv = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>stepDiv.className = 'step-item';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>stepDiv.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="step-number"&gt;Étape ${stepCount}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label&gt;Lieu&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" class="step-lieu"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label&gt;Signification&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" class="step-signification"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>container.appendChild(stepDiv);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Gestion des photos</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('photoInput').addEventListener('change', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const files = Array.from(e.target.files);</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (photoFiles.length + files.length &gt; 4) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>alert('Maximum 4 photos');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>files.forEach(file =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (!file.type.startsWith('image/')) return;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>photoFiles.push(file);</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const reader = new FileReader();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>reader.onload = (event) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const preview = document.getElementById('photoPreview');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const div = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>div.className = 'photo-preview-item';</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>div.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;img src="${event.target.result}" alt="Photo"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button type="button" class="remove-photo" onclick="removePhoto(${photoFiles.length - 1})"&gt;×&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>preview.appendChild(div);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>};</p>
+<p class="p1"><span class="Apple-converted-space">                </span>reader.readAsDataURL(file);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>e.target.value = '';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function removePhoto(index) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>photoFiles.splice(index, 1);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const preview = document.getElementById('photoPreview');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>preview.innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>photoFiles.forEach((file, i) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const reader = new FileReader();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>reader.onload = (event) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const div = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>div.className = 'photo-preview-item';</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>div.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;img src="${event.target.result}" alt="Photo"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button type="button" class="remove-photo" onclick="removePhoto(${i})"&gt;×&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>preview.appendChild(div);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>};</p>
+<p class="p1"><span class="Apple-converted-space">                </span>reader.readAsDataURL(file);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// =============================================</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// SOUMISSION DU FORMULAIRE</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// =============================================</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('lovemapForm').addEventListener('submit', async (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>e.preventDefault();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const submitBtn = document.getElementById('submitBtn');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const loading = document.getElementById('loading');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const errorMsg = document.getElementById('errorMsg');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Validation photos</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (photoFiles.length === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>errorMsg.textContent = 'Veuillez ajouter au moins 1 photo';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>errorMsg.classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>errorMsg.classList.remove('active');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>submitBtn.disabled = true;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>loading.classList.add('active');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Collecter les données</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const formData = collectFormData();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Convertir les photos en base64</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const photos = await Promise.all(photoFiles.map(convertToBase64));</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Envoyer à Google Apps Script</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const orderData = {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>...formData,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>photos: photos</p>
+<p class="p1"><span class="Apple-converted-space">                </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const response = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>method: 'POST',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>body: JSON.stringify(orderData)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const result = await response.json();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (!result.ok) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>throw new Error(result.error || 'Erreur lors de la sauvegarde');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Rediriger vers Stripe</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const stripe = Stripe(CONFIG.STRIPE_PUBLIC_KEY);</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const { error } = await stripe.redirectToCheckout({</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>lineItems: [{</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>price_data: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>currency: 'eur',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>product_data: {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>name: 'LoveMap personnalisée',</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>description: `${formData.prenom1} &amp; ${formData.prenom2}`,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>unit_amount: CONFIG.PRICE_IN_CENTS,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>quantity: 1,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>mode: 'payment',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>successUrl: window.location.origin + '/success.html?session_id={CHECKOUT_SESSION_ID}',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>cancelUrl: window.location.href,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>customerEmail: formData.email,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (error) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>throw new Error(error.message);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>} catch (error) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.error('Erreur:', error);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>errorMsg.textContent = `Erreur: ${error.message}`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>errorMsg.classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>submitBtn.disabled = false;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>loading.classList.remove('active');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Collecter toutes les données du formulaire</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function collectFormData() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Le couple</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const prenom1 = document.getElementById('prenom1').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const prenom2 = document.getElementById('prenom2').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const email = document.getElementById('email').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const dateChoice = document.querySelector('input[name="dateChoice"]:checked').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const dateLabel = dateChoice === 'oui' ? document.getElementById('dateLabel').value : '';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Les étapes</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const steps = [];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.querySelectorAll('.step-item').forEach(item =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const lieu = item.querySelector('.step-lieu').value;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const signification = item.querySelector('.step-signification').value;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (lieu &amp;&amp; signification) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>steps.push({ lieu, signification });</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Fil conducteur</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let filConducteur = document.getElementById('filConducteur').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (filConducteur === 'autre') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>filConducteur = document.getElementById('autreFilConducteur').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Style</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const style = document.querySelector('input[name="style"]:checked').value;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Aujourd'hui</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const relationToday = Array.from(document.querySelectorAll('input[name="relationToday"]:checked'))</p>
+<p class="p1"><span class="Apple-converted-space">                </span>.map(cb =&gt; cb.value);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const relationAutre = document.getElementById('relationAutre').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (relationAutre) relationToday.push(relationAutre);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Phrase finale</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const phraseChoice = document.querySelector('input[name="phraseChoice"]:checked').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const phraseFinal = phraseChoice === 'custom'<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>? document.getElementById('phraseCustom').value<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>: 'Laisser l\'artiste choisir';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>email,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>prenom1,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>prenom2,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>dateLabel,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>steps,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>filConducteur,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>style,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>relationToday,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>phraseFinal</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Convertir un fichier en base64</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function convertToBase64(file) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return new Promise((resolve, reject) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const reader = new FileReader();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>reader.onload = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const base64 = reader.result.split(',')[1];</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>resolve({</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>filename: file.name,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>mimeType: file.type,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>base64: base64</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                </span>};</p>
+<p class="p1"><span class="Apple-converted-space">                </span>reader.onerror = reject;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>reader.readAsDataURL(file);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>

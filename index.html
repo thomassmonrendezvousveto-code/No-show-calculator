@@ -716,7 +716,7 @@
 
             } catch (error) {
                 console.error('Erreur:', error);
-                showError('Une erreur est survenue. Veuillez réessayer.');
+                errorMsg.textContent = `Erreur: ${error?.message || error}`;
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Commander ma LoveMap - 49€';
             }

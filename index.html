@@ -75,6 +75,25 @@
             font-size: 1.1em;
         }
 
+        .info-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-box li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
         .price-tag {
             display: inline-block;
             background: var(--secondary);
@@ -321,6 +340,13 @@
             color: #cc0000;
         }
 
+        .help-text {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.5em;
@@ -345,8 +371,13 @@
     <div class="container">
         <div class="info-box">
             <h2>Une carte personnalisée de votre histoire</h2>
-            <p>Racontez-nous votre parcours amoureux et recevez une magnifique carte illustrée qui retrace les moments clés de votre relation, créée par intelligence artificielle.</p>
-            <p><strong>Livraison :</strong> Fichier haute résolution sous 7-10 jours</p>
+            <p>Racontez-nous votre parcours amoureux et recevez une magnifique carte illustrée créée par intelligence artificielle qui retrace les moments clés de votre relation.</p>
+            <ul>
+                <li>Carte unique générée par IA</li>
+                <li>Design professionnel personnalisé</li>
+                <li>Fichier haute résolution (prêt à imprimer)</li>
+                <li>Livraison sous 7-10 jours</li>
+            </ul>
             <div class="price-tag">49€</div>
         </div>
 
@@ -358,7 +389,7 @@
                     <div class="photo-upload" id="photo-upload-area">
                         <input type="file" id="photo-input" accept="image/*" multiple>
                         <p class="upload-text">📷 Cliquez pour ajouter vos photos</p>
-                        <p style="font-size: 0.9em; color: #666; margin-top: 10px;">Maximum 4 photos</p>
+                        <p class="help-text">Photos de vous deux, des lieux importants... Maximum 4 photos</p>
                     </div>
                     <div class="photo-preview" id="photo-preview"></div>
                 </div>
@@ -369,18 +400,18 @@
                 <h3>💑 Votre Couple</h3>
                 <div class="form-group">
                     <label for="prenom1">Prénom 1 *</label>
-                    <input type="text" id="prenom1" name="prenom1" required>
+                    <input type="text" id="prenom1" name="prenom1" required placeholder="Prénom de la première personne">
                 </div>
                 <div class="form-group">
                     <label for="prenom2">Prénom 2 *</label>
-                    <input type="text" id="prenom2" name="prenom2" required>
+                    <input type="text" id="prenom2" name="prenom2" required placeholder="Prénom de la deuxième personne">
                 </div>
                 <div class="checkbox-group">
                     <input type="checkbox" id="has-date" name="has-date">
-                    <label for="has-date" style="margin-bottom: 0;">J'aimerais ajouter une date spéciale</label>
+                    <label for="has-date" style="margin-bottom: 0;">J'aimerais ajouter une date spéciale sur la carte</label>
                 </div>
                 <div id="date-field" class="conditional-field" style="display: none;">
-                    <label for="date-speciale">Date spéciale</label>
+                    <label for="date-speciale">Date spéciale (ex: première rencontre, mariage...)</label>
                     <input type="date" id="date-speciale" name="date-speciale">
                 </div>
             </div>
@@ -388,7 +419,8 @@
             <!-- Étapes géographiques -->
             <div class="form-section">
                 <h3>🗺️ Votre Parcours (3 à 6 étapes)</h3>
-                <div id="https://script.google.com/macros/s/AKfycbwDJbcdk8eeiZswIhf62xkJZx4cAwHCF8H7jSaxxKjzJw5h-fW2EkKbjbZjjZoPkOVH/exec">
+                <p class="help-text" style="margin-bottom: 20px;">Racontez-nous les lieux clés de votre histoire : première rencontre, voyages importants, lieux de vie...</p>
+                <div id="steps-container">
                     <!-- Les étapes seront ajoutées ici par JavaScript -->
                 </div>
                 <button type="button" class="add-step-btn" id="add-step-btn">+ Ajouter une étape</button>
@@ -398,20 +430,22 @@
             <div class="form-section">
                 <h3>🚗 Fil Conducteur</h3>
                 <div class="form-group">
-                    <label for="fil-conducteur">Moyen de transport ou thème *</label>
+                    <label for="fil-conducteur">Comment voyagez-vous sur votre carte ? *</label>
                     <select id="fil-conducteur" name="fil-conducteur" required>
-                        <option value="">-- Choisissez --</option>
-                        <option value="voiture">Voiture</option>
-                        <option value="train">Train</option>
-                        <option value="avion">Avion</option>
-                        <option value="velo">Vélo</option>
-                        <option value="bateau">Bateau</option>
-                        <option value="autre">Autre</option>
+                        <option value="">-- Choisissez un moyen de transport --</option>
+                        <option value="voiture">🚗 Voiture</option>
+                        <option value="train">🚂 Train</option>
+                        <option value="avion">✈️ Avion</option>
+                        <option value="velo">🚲 Vélo</option>
+                        <option value="bateau">⛵ Bateau</option>
+                        <option value="apied">🚶 À pied</option>
+                        <option value="autre">✨ Autre (précisez)</option>
                     </select>
+                    <p class="help-text">Le moyen de transport symbolique qui reliera les étapes sur votre carte</p>
                 </div>
                 <div id="fil-autre" class="conditional-field" style="display: none;">
                     <label for="fil-autre-details">Précisez votre fil conducteur</label>
-                    <input type="text" id="fil-autre-details" name="fil-autre-details" placeholder="Ex: à pied, en moto...">
+                    <input type="text" id="fil-autre-details" name="fil-autre-details" placeholder="Ex: en moto, à cheval, en montgolfière...">
                 </div>
             </div>
 
@@ -419,28 +453,30 @@
             <div class="form-section">
                 <h3>🎨 Style Artistique</h3>
                 <div class="form-group">
-                    <label for="style">Choisissez votre style préféré *</label>
+                    <label for="style">Quel style visuel préférez-vous ? *</label>
                     <select id="style" name="style" required>
-                        <option value="">-- Choisissez --</option>
-                        <option value="aquarelle">Aquarelle douce</option>
-                        <option value="minimaliste">Minimaliste moderne</option>
-                        <option value="vintage">Vintage rétro</option>
-                        <option value="illustre">Illustré coloré</option>
-                        <option value="romantique">Romantique classique</option>
+                        <option value="">-- Choisissez un style --</option>
+                        <option value="aquarelle">🎨 Aquarelle douce et poétique</option>
+                        <option value="minimaliste">⚪ Minimaliste et épuré</option>
+                        <option value="vintage">📜 Vintage rétro</option>
+                        <option value="illustre">🌈 Illustré coloré et joyeux</option>
+                        <option value="romantique">💕 Romantique classique</option>
                     </select>
+                    <p class="help-text">Choisissez l'ambiance visuelle de votre carte</p>
                 </div>
             </div>
 
             <!-- Relation actuelle -->
             <div class="form-section">
-                <h3>❤️ Votre Relation</h3>
+                <h3>❤️ Votre Relation Aujourd'hui</h3>
                 <div class="form-group">
                     <label for="relation">Êtes-vous toujours ensemble ? *</label>
                     <select id="relation" name="relation" required>
-                        <option value="">-- Choisissez --</option>
-                        <option value="oui">Oui, toujours ensemble !</option>
-                        <option value="non">Non, c'est un souvenir</option>
+                        <option value="">-- Votre situation actuelle --</option>
+                        <option value="oui">💑 Oui, toujours ensemble !</option>
+                        <option value="non">💭 Non, c'est un beau souvenir</option>
                     </select>
+                    <p class="help-text">Cela nous aide à adapter le ton de la carte</p>
                 </div>
             </div>
 
@@ -453,7 +489,8 @@
                 </div>
                 <div id="phrase-field" class="conditional-field" style="display: none;">
                     <label for="phrase-finale">Votre phrase personnalisée</label>
-                    <textarea id="phrase-finale" name="phrase-finale" placeholder="Ex: 'Notre plus belle aventure continue...'"></textarea>
+                    <textarea id="phrase-finale" name="phrase-finale" placeholder="Ex: 'Notre plus belle aventure continue...', 'Merci pour ces moments magiques', 'À jamais dans mon cœur'..."></textarea>
+                    <p class="help-text">Une citation, une pensée, un message qui résume votre histoire</p>
                 </div>
             </div>
 
@@ -461,8 +498,9 @@
             <div class="form-section">
                 <h3>📧 Vos Coordonnées</h3>
                 <div class="form-group">
-                    <label for="email">Email *</label>
+                    <label for="email">Adresse email *</label>
                     <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                    <p class="help-text">Nous vous enverrons votre LoveMap à cette adresse</p>
                 </div>
             </div>
 
@@ -477,12 +515,12 @@
     <script src="https://js.stripe.com/v3/"></script>
     <script>
         // ============================================
-        // CONFIGURATION - À MODIFIER AVANT DÉPLOIEMENT
+        // CONFIGURATION
         // ============================================
         const CONFIG = {
-            STRIPE_PUBLIC_KEY: 'pk_test_51SvJgoLWRrli5XZuenxIejyjz7hWi8pkWbDNkn6i6BdAitWNsO16uAJYNwq1ptyrvKMirF9bnJtM50HQb5A2l0f500carAKVmt',  // Remplacer par votre clé Stripe
-            GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwDJbcdk8eeiZswIhf62xkJZx4cAwHCF8H7jSaxxKjzJw5h-fW2EkKbjbZjjZoPkOVH/exec',  // URL de votre script Google Apps
-            PRICE_IN_CENTS: 4900  // 49€
+            STRIPE_PUBLIC_KEY: 'pk_test_51SvJgoLWRrli5XZuenxIejyjz7hWi8pkWbDNkn6i6BdAitWNsO16uAJYNwq1ptyrvKMirF9bnJtM50HQb5A2l0f500carAKVmt',
+            GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwDJbcdk8eeiZswIhf62xkJZx4cAwHCF8H7jSaxxKjzJw5h-fW2EkKbjbZjjZoPkOVH/exec',
+            PRICE_IN_CENTS: 4900
         };
 
         // ============================================
@@ -559,8 +597,8 @@
                     <input type="text" name="step-${stepCount}-lieu" required placeholder="Ex: Paris, France">
                 </div>
                 <div class="form-group">
-                    <label>Description de cette étape *</label>
-                    <textarea name="step-${stepCount}-description" required placeholder="Que s'est-il passé ici ?"></textarea>
+                    <label>Que s'est-il passé ici ? *</label>
+                    <textarea name="step-${stepCount}-description" required placeholder="Ex: Notre première rencontre dans un café du Marais..."></textarea>
                 </div>
             `;
             stepsContainer.appendChild(stepDiv);
@@ -680,6 +718,8 @@
                     });
                 });
 
+                console.log('Données à envoyer:', data);
+
                 // Envoyer au script Google Apps
                 const response = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
                     method: 'POST',
@@ -689,6 +729,8 @@
                     },
                     body: JSON.stringify(data)
                 });
+
+                console.log('Données envoyées à Google Script');
 
                 // Rediriger vers Stripe
                 const stripe = Stripe(CONFIG.STRIPE_PUBLIC_KEY);
@@ -705,7 +747,7 @@
                         quantity: 1,
                     }],
                     mode: 'payment',
-                    successUrl: window.location.origin + '/success.html',
+                    successUrl: window.location.origin + '/Lovemap/success.html',
                     cancelUrl: window.location.href,
                     customerEmail: data.email,
                 });
@@ -716,7 +758,7 @@
 
             } catch (error) {
                 console.error('Erreur:', error);
-                errorMsg.textContent = `Erreur: ${error?.message || error}`;
+                showError('Une erreur est survenue: ' + (error.message || 'Erreur inconnue'));
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Commander ma LoveMap - 49€';
             }

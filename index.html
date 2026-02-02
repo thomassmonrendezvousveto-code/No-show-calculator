@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LoveMap - Transformez votre histoire d'amour en carte artistique unique</title>
+    <title>LoveMap - Votre histoire d'amour transformée en œuvre d'art unique</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -27,63 +27,223 @@
             line-height: 1.6;
         }
 
+        /* Background Gallery */
+        .bg-gallery {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.08;
+            overflow: hidden;
+        }
+
+        .bg-gallery::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, 
+                var(--cream) 0%, 
+                transparent 20%, 
+                transparent 80%, 
+                var(--cream) 100%);
+            z-index: 1;
+        }
+
+        .bg-image {
+            position: absolute;
+            width: 300px;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .bg-image:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            background-image: url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=400');
+            animation-delay: 0s;
+        }
+
+        .bg-image:nth-child(2) {
+            top: 50%;
+            right: 10%;
+            background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400');
+            animation-delay: 3s;
+        }
+
+        .bg-image:nth-child(3) {
+            bottom: 15%;
+            left: 15%;
+            background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400');
+            animation-delay: 6s;
+        }
+
+        .bg-image:nth-child(4) {
+            top: 30%;
+            right: 5%;
+            background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400');
+            animation-delay: 9s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-20px) rotate(1deg);
+            }
+            50% {
+                transform: translateY(-40px) rotate(-1deg);
+            }
+            75% {
+                transform: translateY(-20px) rotate(0.5deg);
+            }
+        }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            position: relative;
+            z-index: 1;
         }
 
         header {
             text-align: center;
-            padding: 60px 20px;
+            padding: 80px 20px 60px;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             margin-bottom: 40px;
             border-radius: 0 0 30px 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 3.5em;
+            font-size: 4em;
             margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            letter-spacing: 2px;
         }
 
         .subtitle {
-            font-size: 1.3em;
+            font-size: 1.4em;
             font-weight: 300;
             opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .artist-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 25px;
+            border-radius: 50px;
+            margin-top: 20px;
+            font-size: 0.95em;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            background: white;
+            padding: 50px 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .gallery-section h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .gallery-section p {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 20px;
+            color: white;
+            font-size: 0.9em;
         }
 
         .info-box {
             background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
             margin-bottom: 40px;
         }
 
         .info-box h2 {
             font-family: 'Playfair Display', serif;
             color: var(--primary);
-            margin-bottom: 15px;
-            font-size: 2em;
+            margin-bottom: 20px;
+            font-size: 2.3em;
         }
 
         .info-box p {
             margin-bottom: 15px;
-            font-size: 1.1em;
+            font-size: 1.15em;
+            line-height: 1.8;
         }
 
         .info-box ul {
             list-style: none;
             padding-left: 0;
+            margin-top: 25px;
         }
 
         .info-box li {
-            padding: 8px 0;
-            padding-left: 25px;
+            padding: 12px 0;
+            padding-left: 35px;
             position: relative;
+            font-size: 1.1em;
         }
 
         .info-box li:before {
@@ -92,24 +252,38 @@
             left: 0;
             color: var(--secondary);
             font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(212, 129, 110, 0.1) 0%, rgba(139, 158, 125, 0.1) 100%);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .highlight-box strong {
+            color: var(--primary);
         }
 
         .price-tag {
             display: inline-block;
             background: var(--secondary);
             color: white;
-            padding: 15px 30px;
+            padding: 18px 40px;
             border-radius: 50px;
-            font-size: 1.5em;
+            font-size: 1.8em;
             font-weight: 600;
-            margin: 20px 0;
+            margin: 25px 0;
+            box-shadow: 0 5px 20px rgba(139, 158, 125, 0.3);
         }
 
         .form-section {
             background: white;
             padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
             margin-bottom: 30px;
         }
 
@@ -117,9 +291,9 @@
             font-family: 'Playfair Display', serif;
             color: var(--primary);
             margin-bottom: 25px;
-            font-size: 1.8em;
+            font-size: 1.9em;
             border-bottom: 2px solid var(--light-gray);
-            padding-bottom: 10px;
+            padding-bottom: 12px;
         }
 
         .form-group {
@@ -139,9 +313,9 @@
         select,
         textarea {
             width: 100%;
-            padding: 12px 15px;
+            padding: 14px 18px;
             border: 2px solid var(--light-gray);
-            border-radius: 8px;
+            border-radius: 10px;
             font-family: 'Work Sans', sans-serif;
             font-size: 1em;
             transition: border-color 0.3s;
@@ -152,20 +326,22 @@
         textarea:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(212, 129, 110, 0.1);
         }
 
         textarea {
-            min-height: 100px;
+            min-height: 120px;
             resize: vertical;
         }
 
         .photo-upload {
             border: 3px dashed var(--light-gray);
-            border-radius: 10px;
-            padding: 30px;
+            border-radius: 15px;
+            padding: 40px;
             text-align: center;
             transition: all 0.3s;
             cursor: pointer;
+            background: var(--cream);
         }
 
         .photo-upload:hover {
@@ -178,9 +354,10 @@
         }
 
         .upload-text {
-            font-size: 1.1em;
+            font-size: 1.2em;
             color: var(--primary);
-            font-weight: 500;
+            font-weight: 600;
+            margin-bottom: 10px;
         }
 
         .photo-preview {
@@ -192,9 +369,10 @@
 
         .photo-item {
             position: relative;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
             aspect-ratio: 1;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
         }
 
         .photo-item img {
@@ -205,80 +383,85 @@
 
         .photo-item button {
             position: absolute;
-            top: 5px;
-            right: 5px;
-            background: rgba(255, 255, 255, 0.9);
+            top: 8px;
+            right: 8px;
+            background: rgba(255, 255, 255, 0.95);
             border: none;
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 20px;
             color: var(--primary);
             transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .photo-item button:hover {
             background: var(--primary);
             color: white;
-            transform: scale(1.1);
+            transform: scale(1.15);
         }
 
         .step-item {
             background: var(--cream);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            border-left: 4px solid var(--secondary);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--secondary);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .step-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         .step-number {
             font-weight: 600;
             color: var(--secondary);
-            font-size: 1.1em;
+            font-size: 1.15em;
         }
 
         .remove-step {
             background: transparent;
             border: 2px solid var(--primary);
             color: var(--primary);
-            padding: 5px 15px;
-            border-radius: 5px;
+            padding: 6px 18px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 0.9em;
             transition: all 0.3s;
+            font-weight: 500;
         }
 
         .remove-step:hover {
             background: var(--primary);
             color: white;
+            transform: translateY(-2px);
         }
 
         .add-step-btn {
             background: var(--secondary);
             color: white;
             border: none;
-            padding: 12px 30px;
-            border-radius: 8px;
+            padding: 14px 35px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 1em;
-            font-weight: 500;
+            font-size: 1.05em;
+            font-weight: 600;
             transition: all 0.3s;
             width: 100%;
             margin-top: 10px;
+            box-shadow: 0 3px 15px rgba(139, 158, 125, 0.2);
         }
 
         .add-step-btn:hover {
             background: #7a8c6d;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(139, 158, 125, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(139, 158, 125, 0.3);
         }
 
         .add-step-btn:disabled {
@@ -289,41 +472,43 @@
         .checkbox-group {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 12px;
+            margin-top: 18px;
         }
 
         .checkbox-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             cursor: pointer;
         }
 
         .conditional-field {
-            margin-top: 15px;
-            padding: 15px;
+            margin-top: 18px;
+            padding: 20px;
             background: rgba(212, 129, 110, 0.05);
-            border-radius: 8px;
-            border-left: 3px solid var(--primary);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
         }
 
         .submit-btn {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             border: none;
-            padding: 18px 50px;
+            padding: 22px 60px;
             border-radius: 50px;
-            font-size: 1.3em;
-            font-weight: 600;
+            font-size: 1.4em;
+            font-weight: 700;
             cursor: pointer;
             width: 100%;
             transition: all 0.3s;
-            box-shadow: 0 5px 20px rgba(212, 129, 110, 0.3);
+            box-shadow: 0 8px 25px rgba(212, 129, 110, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .submit-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(212, 129, 110, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(212, 129, 110, 0.5);
         }
 
         .submit-btn:disabled {
@@ -333,63 +518,102 @@
 
         .error-message {
             background: #ffe0e0;
-            border-left: 4px solid #ff4444;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            border-left: 5px solid #ff4444;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 25px;
             color: #cc0000;
+            font-weight: 500;
         }
 
         .help-text {
-            font-size: 0.9em;
+            font-size: 0.95em;
             color: #666;
-            margin-top: 5px;
+            margin-top: 8px;
             font-style: italic;
         }
 
         @media (max-width: 768px) {
             h1 {
-                font-size: 2.5em;
+                font-size: 2.8em;
             }
             
             .subtitle {
-                font-size: 1.1em;
+                font-size: 1.2em;
             }
             
             .form-section {
                 padding: 25px 20px;
             }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bg-image {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Background Gallery -->
+    <div class="bg-gallery">
+        <div class="bg-image"></div>
+        <div class="bg-image"></div>
+        <div class="bg-image"></div>
+        <div class="bg-image"></div>
+    </div>
+
     <header>
         <h1>LoveMap</h1>
-        <p class="subtitle">Transformez votre histoire d'amour en carte artistique unique</p>
+        <p class="subtitle">Votre histoire d'amour transformée en œuvre d'art unique</p>
+        <div class="artist-badge">✨ Créée par une artiste professionnelle ✨</div>
     </header>
 
     <div class="container">
+        <!-- Gallery Section -->
+        <div class="gallery-section">
+            <h2>Exemples de LoveMaps</h2>
+            <p>Découvrez quelques créations réalisées pour nos clients</p>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=400&h=500&fit=crop" alt="Exemple LoveMap 1">
+                    <div class="gallery-overlay">Style Aquarelle</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1569163139394-de4798aa62b5?w=400&h=500&fit=crop" alt="Exemple LoveMap 2">
+                    <div class="gallery-overlay">Style Minimaliste</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5?w=400&h=500&fit=crop" alt="Exemple LoveMap 3">
+                    <div class="gallery-overlay">Style Romantique</div>
+                </div>
+            </div>
+        </div>
+
         <div class="info-box">
-            <h2>Une carte personnalisée de votre histoire</h2>
-            <p>Racontez-nous votre parcours amoureux et recevez une magnifique carte illustrée créée par intelligence artificielle qui retrace les moments clés de votre relation.</p>
+            <h2>Une carte artistique de votre histoire</h2>
+            <p>Racontez-nous votre parcours amoureux et recevez une magnifique carte illustrée à la main par notre artiste professionnelle, qui retrace avec délicatesse les moments clés de votre relation.</p>
+
             <ul>
-                <li>Carte unique générée par IA</li>
-                <li>Design professionnel personnalisé</li>
+                <li>Œuvre originale réalisée par une artiste</li>
+                <li>Design personnalisé selon vos souhaits</li>
                 <li>Fichier haute résolution (prêt à imprimer)</li>
-                <li>Livraison sous 7-10 jours</li>
+                <li>Livraison rapide sous 1 à 3 jours</li>
             </ul>
-            <div class="price-tag">49€</div>
+            <div class="price-tag">19€</div>
         </div>
 
         <form id="lovemap-form">
             <!-- Photos -->
             <div class="form-section">
-                <h3>📸 Vos Photos (1 à 4 max)</h3>
+                <h3>📸 Vos Photos (1 à 4)</h3>
                 <div class="form-group">
                     <div class="photo-upload" id="photo-upload-area">
                         <input type="file" id="photo-input" accept="image/*" multiple>
                         <p class="upload-text">📷 Cliquez pour ajouter vos photos</p>
-                        <p class="help-text">Photos de vous deux, des lieux importants... Maximum 4 photos</p>
+                        <p class="help-text">Photos de vous deux, des lieux importants de votre histoire... Maximum 4 photos</p>
                     </div>
                     <div class="photo-preview" id="photo-preview"></div>
                 </div>
@@ -399,27 +623,28 @@
             <div class="form-section">
                 <h3>💑 Votre Couple</h3>
                 <div class="form-group">
-                    <label for="prenom1">Prénom 1 *</label>
+                    <label for="prenom1">Premier prénom *</label>
                     <input type="text" id="prenom1" name="prenom1" required placeholder="Prénom de la première personne">
                 </div>
                 <div class="form-group">
-                    <label for="prenom2">Prénom 2 *</label>
+                    <label for="prenom2">Deuxième prénom *</label>
                     <input type="text" id="prenom2" name="prenom2" required placeholder="Prénom de la deuxième personne">
                 </div>
                 <div class="checkbox-group">
                     <input type="checkbox" id="has-date" name="has-date">
-                    <label for="has-date" style="margin-bottom: 0;">J'aimerais ajouter une date spéciale sur la carte</label>
+                    <label for="has-date" style="margin-bottom: 0;">Ajouter une date spéciale sur la carte</label>
                 </div>
                 <div id="date-field" class="conditional-field" style="display: none;">
                     <label for="date-speciale">Date spéciale (ex: première rencontre, mariage...)</label>
                     <input type="date" id="date-speciale" name="date-speciale">
+                    <p class="help-text">Cette date sera joliment intégrée à votre carte</p>
                 </div>
             </div>
 
             <!-- Étapes géographiques -->
             <div class="form-section">
-                <h3>🗺️ Votre Parcours (3 à 6 étapes)</h3>
-                <p class="help-text" style="margin-bottom: 20px;">Racontez-nous les lieux clés de votre histoire : première rencontre, voyages importants, lieux de vie...</p>
+                <h3>🗺️ Les Étapes de Votre Histoire (3 à 6)</h3>
+                <p class="help-text" style="margin-bottom: 25px;">Racontez-nous les lieux qui ont marqué votre parcours : première rencontre, voyages mémorables, déménagements, moments importants...</p>
                 <div id="steps-container">
                     <!-- Les étapes seront ajoutées ici par JavaScript -->
                 </div>
@@ -428,9 +653,9 @@
 
             <!-- Fil conducteur -->
             <div class="form-section">
-                <h3>🚗 Fil Conducteur</h3>
+                <h3>🚗 Fil Conducteur Visuel</h3>
                 <div class="form-group">
-                    <label for="fil-conducteur">Comment voyagez-vous sur votre carte ? *</label>
+                    <label for="fil-conducteur">Comment souhaitez-vous voyager sur votre carte ? *</label>
                     <select id="fil-conducteur" name="fil-conducteur" required>
                         <option value="">-- Choisissez un moyen de transport --</option>
                         <option value="voiture">🚗 Voiture</option>
@@ -439,21 +664,21 @@
                         <option value="velo">🚲 Vélo</option>
                         <option value="bateau">⛵ Bateau</option>
                         <option value="apied">🚶 À pied</option>
-                        <option value="autre">✨ Autre (précisez)</option>
+                        <option value="autre">✨ Autre moyen (précisez)</option>
                     </select>
-                    <p class="help-text">Le moyen de transport symbolique qui reliera les étapes sur votre carte</p>
+                    <p class="help-text">L'artiste dessinera ce moyen de transport pour relier les étapes de votre parcours</p>
                 </div>
                 <div id="fil-autre" class="conditional-field" style="display: none;">
-                    <label for="fil-autre-details">Précisez votre fil conducteur</label>
+                    <label for="fil-autre-details">Précisez votre moyen de transport</label>
                     <input type="text" id="fil-autre-details" name="fil-autre-details" placeholder="Ex: en moto, à cheval, en montgolfière...">
                 </div>
             </div>
 
             <!-- Style artistique -->
             <div class="form-section">
-                <h3>🎨 Style Artistique</h3>
+                <h3>🎨 Style Artistique Préféré</h3>
                 <div class="form-group">
-                    <label for="style">Quel style visuel préférez-vous ? *</label>
+                    <label for="style">Quel univers visuel vous attire le plus ? *</label>
                     <select id="style" name="style" required>
                         <option value="">-- Choisissez un style --</option>
                         <option value="aquarelle">🎨 Aquarelle douce et poétique</option>
@@ -461,8 +686,10 @@
                         <option value="vintage">📜 Vintage rétro</option>
                         <option value="illustre">🌈 Illustré coloré et joyeux</option>
                         <option value="romantique">💕 Romantique classique</option>
+                        <option value="disney">✨ Disney / Conte de fées</option>
+                        <option value="manga">🎌 Manga / Anime japonais</option>
                     </select>
-                    <p class="help-text">Choisissez l'ambiance visuelle de votre carte</p>
+                    <p class="help-text">L'artiste adaptera son coup de crayon à l'ambiance que vous souhaitez</p>
                 </div>
             </div>
 
@@ -470,57 +697,91 @@
             <div class="form-section">
                 <h3>❤️ Votre Relation Aujourd'hui</h3>
                 <div class="form-group">
-                    <label for="relation">Êtes-vous toujours ensemble ? *</label>
+                    <label for="relation">Quelle est votre situation actuelle ? *</label>
                     <select id="relation" name="relation" required>
-                        <option value="">-- Votre situation actuelle --</option>
-                        <option value="oui">💑 Oui, toujours ensemble !</option>
-                        <option value="non">💭 Non, c'est un beau souvenir</option>
+                        <option value="">-- Votre situation --</option>
+                        <option value="oui">💑 Toujours ensemble et heureux !</option>
+                        <option value="non">💭 Un beau souvenir à préserver</option>
                     </select>
-                    <p class="help-text">Cela nous aide à adapter le ton de la carte</p>
+                    <p class="help-text">Cela aide l'artiste à adapter le ton et l'émotion de la carte</p>
                 </div>
             </div>
 
             <!-- Phrase finale -->
             <div class="form-section">
-                <h3>✨ Touche Personnelle</h3>
+                <h3>✨ Touche Personnelle (Optionnel)</h3>
                 <div class="checkbox-group">
                     <input type="checkbox" id="has-phrase" name="has-phrase">
-                    <label for="has-phrase" style="margin-bottom: 0;">J'aimerais ajouter une phrase spéciale sur la carte</label>
+                    <label for="has-phrase" style="margin-bottom: 0;">Ajouter une phrase ou citation sur la carte</label>
                 </div>
                 <div id="phrase-field" class="conditional-field" style="display: none;">
-                    <label for="phrase-finale">Votre phrase personnalisée</label>
-                    <textarea id="phrase-finale" name="phrase-finale" placeholder="Ex: 'Notre plus belle aventure continue...', 'Merci pour ces moments magiques', 'À jamais dans mon cœur'..."></textarea>
-                    <p class="help-text">Une citation, une pensée, un message qui résume votre histoire</p>
+                    <label for="phrase-finale">Votre message personnel</label>
+                    <textarea id="phrase-finale" name="phrase-finale" placeholder="Ex: 'Notre plus belle aventure continue...', 'Merci pour ces moments magiques', 'À jamais dans mon cœur', 'Paris - Bali - Lyon, notre histoire'..."></textarea>
+                    <p class="help-text">Une citation, une pensée, une phrase qui résume votre parcours</p>
                 </div>
             </div>
 
             <!-- Contact -->
             <div class="form-section">
-                <h3>📧 Vos Coordonnées</h3>
+                <h3>📧 Coordonnées de Livraison</h3>
                 <div class="form-group">
-                    <label for="email">Adresse email *</label>
+                    <label for="email">Votre adresse email *</label>
                     <input type="email" id="email" name="email" required placeholder="votre@email.com">
-                    <p class="help-text">Nous vous enverrons votre LoveMap à cette adresse</p>
+                    <p class="help-text">Vous recevrez votre LoveMap en haute résolution à cette adresse sous 1 à 3 jours</p>
+                </div>
+            </div>
+
+            <!-- Option cadre imprimé -->
+            <div class="form-section" style="border: 3px solid var(--primary); background: linear-gradient(135deg, rgba(212, 129, 110, 0.05) 0%, rgba(139, 158, 125, 0.05) 100%);">
+                <h3>🖼️ Option Premium : Impression Encadrée</h3>
+                <div class="checkbox-group" style="margin-top: 0;">
+                    <input type="checkbox" id="has-frame" name="has-frame">
+                    <label for="has-frame" style="margin-bottom: 0; font-size: 1.1em; font-weight: 600;">
+                        Je souhaite recevoir ma LoveMap imprimée dans un joli cadre (+40€)
+                    </label>
+                </div>
+                <div id="frame-details" class="conditional-field" style="display: none; margin-top: 20px;">
+                    <p style="margin-bottom: 15px;"><strong>Ce que vous recevez :</strong></p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <span style="position: absolute; left: 0; color: var(--secondary); font-weight: bold;">✓</span>
+                            Impression professionnelle haute qualité (format A3 ou A4)
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <span style="position: absolute; left: 0; color: var(--secondary); font-weight: bold;">✓</span>
+                            Cadre élégant en bois naturel avec vitre protectrice
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <span style="position: absolute; left: 0; color: var(--secondary); font-weight: bold;">✓</span>
+                            Emballage soigné et sécurisé
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <span style="position: absolute; left: 0; color: var(--secondary); font-weight: bold;">✓</span>
+                            Prêt à accrocher au mur
+                        </li>
+                    </ul>
+                    <div style="background: white; padding: 15px; border-radius: 10px; margin-top: 15px; text-align: center;">
+                        <strong style="font-size: 1.2em; color: var(--primary);">Prix total avec cadre : 59€</strong>
+                        <p style="font-size: 0.9em; color: #666; margin-top: 5px;">(19€ LoveMap numérique + 40€ impression et cadre)</p>
+                    </div>
                 </div>
             </div>
 
             <div id="error-container"></div>
 
             <button type="submit" class="submit-btn" id="submit-btn">
-                Commander ma LoveMap - 49€
+                Commander ma LoveMap - 19€
             </button>
         </form>
     </div>
 
-    <script src="https://js.stripe.com/v3/"></script>
     <script>
         // ============================================
         // CONFIGURATION
         // ============================================
         const CONFIG = {
-            STRIPE_PUBLIC_KEY: 'pk_test_51SvJgoLWRrli5XZuenxIejyjz7hWi8pkWbDNkn6i6BdAitWNsO16uAJYNwq1ptyrvKMirF9bnJtM50HQb5A2l0f500carAKVmt',
             GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwDJbcdk8eeiZswIhf62xkJZx4cAwHCF8H7jSaxxKjzJw5h-fW2EkKbjbZjjZoPkOVH/exec',
-            PRICE_IN_CENTS: 4900
+            STRIPE_PAYMENT_LINK: 'VOTRE_LIEN_STRIPE_ICI'
         };
 
         // ============================================
@@ -598,7 +859,7 @@
                 </div>
                 <div class="form-group">
                     <label>Que s'est-il passé ici ? *</label>
-                    <textarea name="step-${stepCount}-description" required placeholder="Ex: Notre première rencontre dans un café du Marais..."></textarea>
+                    <textarea name="step-${stepCount}-description" required placeholder="Ex: Notre première rencontre dans un café du Marais, un jour d'automne ensoleillé..."></textarea>
                 </div>
             `;
             stepsContainer.appendChild(stepDiv);
@@ -653,6 +914,24 @@
             document.getElementById('phrase-field').style.display = e.target.checked ? 'block' : 'none';
         });
 
+        document.getElementById('has-frame').addEventListener('change', (e) => {
+            document.getElementById('frame-details').style.display = e.target.checked ? 'block' : 'none';
+            updateSubmitButton();
+        });
+
+        // ============================================
+        // MISE À JOUR DU PRIX DU BOUTON
+        // ============================================
+        function updateSubmitButton() {
+            const hasFrame = document.getElementById('has-frame').checked;
+            const submitBtn = document.getElementById('submit-btn');
+            if (hasFrame) {
+                submitBtn.textContent = 'Commander ma LoveMap - 59€';
+            } else {
+                submitBtn.textContent = 'Commander ma LoveMap - 19€';
+            }
+        }
+
         // ============================================
         // GESTION ERREURS
         // ============================================
@@ -676,19 +955,19 @@
 
             // Validation photos
             if (uploadedPhotos.length === 0) {
-                showError('Veuillez ajouter au moins 1 photo');
+                showError('Veuillez ajouter au moins 1 photo pour que l\'artiste puisse créer votre carte');
                 return;
             }
 
             // Validation nombre d'étapes
             const currentSteps = stepsContainer.querySelectorAll('.step-item').length;
             if (currentSteps < 3) {
-                showError('Vous devez avoir au moins 3 étapes');
+                showError('Vous devez renseigner au moins 3 étapes pour votre parcours');
                 return;
             }
 
             submitBtn.disabled = true;
-            submitBtn.textContent = '⏳ Traitement en cours...';
+            submitBtn.textContent = '⏳ Envoi de votre commande...';
 
             try {
                 // Collecter toutes les données
@@ -703,6 +982,8 @@
                     style: formData.get('style'),
                     relation: formData.get('relation'),
                     phraseFinale: formData.get('has-phrase') ? formData.get('phrase-finale') : null,
+                    optionCadre: formData.get('has-frame') ? 'Oui - Impression encadrée (+40€)' : 'Non - Numérique uniquement',
+                    prixTotal: formData.get('has-frame') ? '59€' : '19€',
                     etapes: [],
                     photos: uploadedPhotos
                 };
@@ -721,7 +1002,7 @@
                 console.log('Données à envoyer:', data);
 
                 // Envoyer au script Google Apps
-                const response = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+                await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
@@ -732,35 +1013,14 @@
 
                 console.log('Données envoyées à Google Script');
 
-                // Rediriger vers Stripe
-                const stripe = Stripe(CONFIG.STRIPE_PUBLIC_KEY);
-                const { error } = await stripe.redirectToCheckout({
-                    lineItems: [{
-                        price_data: {
-                            currency: 'eur',
-                            product_data: {
-                                name: 'LoveMap Personnalisée',
-                                description: `Carte personnalisée pour ${data.prenom1} et ${data.prenom2}`,
-                            },
-                            unit_amount: CONFIG.PRICE_IN_CENTS,
-                        },
-                        quantity: 1,
-                    }],
-                    mode: 'payment',
-                    successUrl: window.location.origin + '/Lovemap/success.html',
-                    cancelUrl: window.location.href,
-                    customerEmail: data.email,
-                });
-
-                if (error) {
-                    throw new Error(error.message);
-                }
+                // Rediriger vers Stripe Payment Link
+                window.location.href = CONFIG.STRIPE_PAYMENT_LINK + '?prefilled_email=' + encodeURIComponent(data.email);
 
             } catch (error) {
                 console.error('Erreur:', error);
                 showError('Une erreur est survenue: ' + (error.message || 'Erreur inconnue'));
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Commander ma LoveMap - 49€';
+                updateSubmitButton();
             }
         });
     </script>

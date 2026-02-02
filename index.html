@@ -255,18 +255,6 @@
             font-size: 1.3em;
         }
 
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(212, 129, 110, 0.1) 0%, rgba(139, 158, 125, 0.1) 100%);
-            border-left: 4px solid var(--primary);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-
-        .highlight-box strong {
-            color: var(--primary);
-        }
-
         .price-tag {
             display: inline-block;
             background: var(--secondary);
@@ -578,16 +566,16 @@
             <p>Découvrez quelques créations réalisées pour nos clients</p>
             <div class="gallery-grid">
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=400&h=500&fit=crop" alt="Exemple LoveMap 1">
+                    <img src="exemple1.jpg" alt="Exemple LoveMap 1">
                     <div class="gallery-overlay">Style Aquarelle</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1569163139394-de4798aa62b5?w=400&h=500&fit=crop" alt="Exemple LoveMap 2">
-                    <div class="gallery-overlay">Style Minimaliste</div>
+                    <img src="exemple2.jpg" alt="Exemple LoveMap 2">
+                    <div class="gallery-overlay">Style Disney</div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5?w=400&h=500&fit=crop" alt="Exemple LoveMap 3">
-                    <div class="gallery-overlay">Style Romantique</div>
+                    <img src="exemple3.jpg" alt="Exemple LoveMap 3">
+                    <div class="gallery-overlay">Style Manga</div>
                 </div>
             </div>
         </div>
@@ -781,7 +769,8 @@
         // ============================================
         const CONFIG = {
             GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwDJbcdk8eeiZswIhf62xkJZx4cAwHCF8H7jSaxxKjzJw5h-fW2EkKbjbZjjZoPkOVH/exec',
-            STRIPE_PAYMENT_LINK: 'VOTRE_LIEN_STRIPE_ICI'
+            STRIPE_PAYMENT_LINK_19: 'VOTRE_LIEN_STRIPE_19_EUROS_ICI',
+            STRIPE_PAYMENT_LINK_59: 'VOTRE_LIEN_STRIPE_59_EUROS_ICI'
         };
 
         // ============================================
@@ -1013,8 +1002,12 @@
 
                 console.log('Données envoyées à Google Script');
 
+                // Choisir le bon lien Stripe selon l'option cadre
+                const hasFrame = formData.get('has-frame');
+                const stripeLink = hasFrame ? CONFIG.STRIPE_PAYMENT_LINK_59 : CONFIG.STRIPE_PAYMENT_LINK_19;
+                
                 // Rediriger vers Stripe Payment Link
-                window.location.href = CONFIG.STRIPE_PAYMENT_LINK + '?prefilled_email=' + encodeURIComponent(data.email);
+                window.location.href = stripeLink + '?prefilled_email=' + encodeURIComponent(data.email);
 
             } catch (error) {
                 console.error('Erreur:', error);

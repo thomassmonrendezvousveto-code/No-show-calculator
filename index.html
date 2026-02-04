@@ -941,19 +941,25 @@
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            console.log('=== DÉBUT SOUMISSION FORMULAIRE ===');
 
             // Validation photos
             if (uploadedPhotos.length === 0) {
+                console.log('ERREUR: Aucune photo');
                 showError('Veuillez ajouter au moins 1 photo pour que l\'artiste puisse créer votre carte');
                 return;
             }
+            console.log('✅ Photos validées:', uploadedPhotos.length);
 
             // Validation nombre d'étapes
             const currentSteps = stepsContainer.querySelectorAll('.step-item').length;
             if (currentSteps < 3) {
+                console.log('ERREUR: Pas assez d\'étapes');
                 showError('Vous devez renseigner au moins 3 étapes pour votre parcours');
                 return;
             }
+            console.log('✅ Étapes validées:', currentSteps);
 
             submitBtn.disabled = true;
             submitBtn.textContent = '⏳ Envoi de votre commande...';
@@ -988,10 +994,20 @@
                     });
                 });
 
-                console.log('Données à envoyer:', data);
+                console.log('📦 Données collectées:', {
+                    prenom1: data.prenom1,
+                    prenom2: data.prenom2,
+                    email: data.email,
+                    nbEtapes: data.etapes.length,
+                    nbPhotos: data.photos.length,
+                    prixTotal: data.prixTotal
+                });
+
+                console.log('🚀 Envoi au Google Script...');
+                console.log('URL:', CONFIG.GOOGLE_SCRIPT_URL);
 
                 // Envoyer au script Google Apps
-                await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+                const response = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
@@ -1000,17 +1016,23 @@
                     body: JSON.stringify(data)
                 });
 
-                console.log('Données envoyées à Google Script');
+                console.log('✅ Envoi terminé (mode no-cors - pas de réponse disponible)');
+                
+                // Attendre 2 secondes pour laisser le temps au script de traiter
+                console.log('⏳ Attente 2 secondes...');
+                await new Promise(resolve => setTimeout(resolve, 2000));
 
                 // Choisir le bon lien Stripe selon l'option cadre
                 const hasFrame = formData.get('has-frame');
                 const stripeLink = hasFrame ? CONFIG.STRIPE_PAYMENT_LINK_59 : CONFIG.STRIPE_PAYMENT_LINK_19;
                 
+                console.log('💳 Redirection vers Stripe:', stripeLink);
+                
                 // Rediriger vers Stripe Payment Link
                 window.location.href = stripeLink + '?prefilled_email=' + encodeURIComponent(data.email);
 
             } catch (error) {
-                console.error('Erreur:', error);
+                console.error('❌ ERREUR:', error);
                 showError('Une erreur est survenue: ' + (error.message || 'Erreur inconnue'));
                 submitBtn.disabled = false;
                 updateSubmitButton();

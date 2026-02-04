@@ -798,7 +798,7 @@
 
                 await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    mode: 'no-cors',
                     body: JSON.stringify(data)
                 });
 

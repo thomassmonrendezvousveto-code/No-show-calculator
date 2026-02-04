@@ -1,136 +1,152 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>LoveMap</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { font-family: Arial, sans-serif; background:#f5f1e8; padding:20px; }
-    h1 { text-align:center; }
-    .box { background:white; padding:20px; border-radius:10px; max-width:600px; margin:0 auto; }
-    .photo { border:2px dashed #ccc; padding:20px; text-align:center; cursor:pointer; }
-    .preview img { max-width:100px; margin:5px; border-radius:8px; }
-    button { padding:15px; width:100%; font-size:16px; background:#D4816E; color:white; border:none; border-radius:8px; cursor:pointer; }
-    button:disabled { opacity:0.6; }
-    .error { color:red; margin-top:10px; }
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
   </style>
 </head>
-
 <body>
-
-<h1>LoveMap</h1>
-
-<div class="box">
-  <form id="form">
-
-    <h3>📸 Photos (1 à 4)</h3>
-    <div class="photo" id="photoBox">Clique pour ajouter des photos</div>
-    <input type="file" id="photos" accept="image/*" multiple hidden>
-    <div class="preview" id="preview"></div>
-
-    <h3>💑 Infos</h3>
-    <input required placeholder="Prénom 1" name="prenom1"><br><br>
-    <input required placeholder="Prénom 2" name="prenom2"><br><br>
-    <input required type="email" placeholder="Email" name="email"><br><br>
-
-    <h3>🗺️ Étapes (min 3)</h3>
-    <div id="steps"></div>
-    <button type="button" id="addStep">+ Ajouter une étape</button><br><br>
-
-    <h3>🖼️ Cadre (+40€)</h3>
-    <label><input type="checkbox" id="frame"> Oui</label><br><br>
-
-    <div class="error" id="error"></div><br>
-
-    <button id="submit">Commander</button>
-  </form>
-</div>
-
-<script>
-/* ================= CONFIG ================= */
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDJbcdk8eeiZswIhf62xkJZx4cAwHCF8H7jSaxxKjzJw5h-fW2EkKbjbZjjZoPkOVH/exec";
-const STRIPE_19 = "https://buy.stripe.com/9B68wQ2EG1zx4Lvf0C5kk00";
-const STRIPE_59 = "https://buy.stripe.com/3cI00kgvwceb91LcSu5kk01";
-
-/* ================= PHOTOS ================= */
-let photosData = [];
-const photosInput = document.getElementById("photos");
-const preview = document.getElementById("preview");
-document.getElementById("photoBox").onclick = () => photosInput.click();
-
-photosInput.onchange = async e => {
-  for (let f of e.target.files) {
-    if (photosData.length >= 4) return;
-    const data = await compress(f);
-    photosData.push({ name:f.name, data });
-  }
-  renderPhotos();
-};
-
-function renderPhotos(){
-  preview.innerHTML = photosData.map(p => `<img src="${p.data}">`).join("");
-}
-
-async function compress(file){
-  const img = new Image();
-  img.src = URL.createObjectURL(file);
-  await img.decode();
-  const c = document.createElement("canvas");
-  const r = Math.min(1600/img.width,1600/img.height,1);
-  c.width = img.width*r; c.height = img.height*r;
-  c.getContext("2d").drawImage(img,0,0,c.width,c.height);
-  return c.toDataURL("image/jpeg",0.8);
-}
-
-/* ================= ETAPES ================= */
-const stepsDiv = document.getElementById("steps");
-function addStep(){
-  const d = document.createElement("div");
-  d.innerHTML = `
-    <input required placeholder="Lieu"><br>
-    <textarea required placeholder="Description"></textarea><br><br>`;
-  stepsDiv.appendChild(d);
-}
-document.getElementById("addStep").onclick = addStep;
-addStep(); addStep(); addStep();
-
-/* ================= SUBMIT ================= */
-document.getElementById("form").onsubmit = async e => {
-  e.preventDefault();
-  const error = document.getElementById("error");
-  error.textContent = "";
-
-  if (photosData.length === 0) return error.textContent = "Ajoute au moins une photo";
-  if (stepsDiv.children.length < 3) return error.textContent = "Ajoute au moins 3 étapes";
-
-  const fd = new FormData(e.target);
-  const data = {
-    prenom1: fd.get("prenom1"),
-    prenom2: fd.get("prenom2"),
-    email: fd.get("email"),
-    optionCadre: document.getElementById("frame").checked,
-    prixTotal: document.getElementById("frame").checked ? "59€" : "19€",
-    photos: photosData,
-    etapes: [...stepsDiv.children].map((s,i)=>({
-      numero:i+1,
-      lieu:s.querySelector("input").value,
-      description:s.querySelector("textarea").value
-    }))
-  };
-
-  document.getElementById("submit").disabled = true;
-
-  await fetch(GOOGLE_SCRIPT_URL, {
-    method:"POST",
-    headers:{ "Content-Type":"text/plain;charset=utf-8" },
-    body:JSON.stringify(data)
-  });
-
-  /* ✅ REDIRECTION STRIPE (SIMPLE & FIABLE) */
-  const stripeUrl = document.getElementById("frame").checked ? STRIPE_59 : STRIPE_19;
-  window.location.href = stripeUrl + "?prefilled_email=" + encodeURIComponent(data.email);
-};
-</script>
-
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="fr"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;LoveMap&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body { font-family: Arial, sans-serif; background:#f5f1e8; padding:20px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>h1 { text-align:center; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.box { background:white; padding:20px; border-radius:10px; max-width:600px; margin:0 auto; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.photo { border:2px dashed #ccc; padding:20px; text-align:center; cursor:pointer; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.preview img { max-width:100px; margin:5px; border-radius:8px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>button { padding:15px; width:100%; font-size:16px; background:#D4816E; color:white; border:none; border-radius:8px; cursor:pointer; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>button:disabled { opacity:0.6; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.error { color:red; margin-top:10px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;h1&gt;LoveMap&lt;/h1&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="box"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;form id="form"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h3&gt;📸 Photos (1 à 4)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="photo" id="photoBox"&gt;Clique pour ajouter des photos&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;input type="file" id="photos" accept="image/*" multiple hidden&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="preview" id="preview"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h3&gt;💑 Infos&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;input required placeholder="Prénom 1" name="prenom1"&gt;&lt;br&gt;&lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;input required placeholder="Prénom 2" name="prenom2"&gt;&lt;br&gt;&lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;input required type="email" placeholder="Email" name="email"&gt;&lt;br&gt;&lt;br&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h3&gt;🗺️ Étapes (min 3)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="steps"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button type="button" id="addStep"&gt;+ Ajouter une étape&lt;/button&gt;&lt;br&gt;&lt;br&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h3&gt;🖼️ Cadre (+40€)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label&gt;&lt;input type="checkbox" id="frame"&gt; Oui&lt;/label&gt;&lt;br&gt;&lt;br&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="error" id="error"&gt;&lt;/div&gt;&lt;br&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button id="submit"&gt;Commander&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/form&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1">/* ================= CONFIG ================= */</p>
+<p class="p1">const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDJbcdk8eeiZswIhf62xkJZx4cAwHCF8H7jSaxxKjzJw5h-fW2EkKbjbZjjZoPkOVH/exec";</p>
+<p class="p1">const STRIPE_19 = "https://buy.stripe.com/9B68wQ2EG1zx4Lvf0C5kk00";</p>
+<p class="p1">const STRIPE_59 = "https://buy.stripe.com/3cI00kgvwceb91LcSu5kk01";</p>
+<p class="p2"><br></p>
+<p class="p1">/* ================= PHOTOS ================= */</p>
+<p class="p1">let photosData = [];</p>
+<p class="p1">const photosInput = document.getElementById("photos");</p>
+<p class="p1">const preview = document.getElementById("preview");</p>
+<p class="p1">document.getElementById("photoBox").onclick = () =&gt; photosInput.click();</p>
+<p class="p2"><br></p>
+<p class="p1">photosInput.onchange = async e =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (let f of e.target.files) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (photosData.length &gt;= 4) return;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const data = await compress(f);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>photosData.push({ name:f.name, data });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderPhotos();</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">function renderPhotos(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>preview.innerHTML = photosData.map(p =&gt; `&lt;img src="${p.data}"&gt;`).join("");</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">async function compress(file){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const img = new Image();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>img.src = URL.createObjectURL(file);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>await img.decode();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const c = document.createElement("canvas");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const r = Math.min(1600/img.width,1600/img.height,1);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>c.width = img.width*r; c.height = img.height*r;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>c.getContext("2d").drawImage(img,0,0,c.width,c.height);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return c.toDataURL("image/jpeg",0.8);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ================= ETAPES ================= */</p>
+<p class="p1">const stepsDiv = document.getElementById("steps");</p>
+<p class="p1">function addStep(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const d = document.createElement("div");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>d.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;input required placeholder="Lieu"&gt;&lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;textarea required placeholder="Description"&gt;&lt;/textarea&gt;&lt;br&gt;&lt;br&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>stepsDiv.appendChild(d);</p>
+<p class="p1">}</p>
+<p class="p1">document.getElementById("addStep").onclick = addStep;</p>
+<p class="p1">addStep(); addStep(); addStep();</p>
+<p class="p2"><br></p>
+<p class="p1">/* ================= SUBMIT ================= */</p>
+<p class="p1">document.getElementById("form").onsubmit = async e =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>e.preventDefault();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const error = document.getElementById("error");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>error.textContent = "";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (photosData.length === 0) return error.textContent = "Ajoute au moins une photo";</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (stepsDiv.children.length &lt; 3) return error.textContent = "Ajoute au moins 3 étapes";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const fd = new FormData(e.target);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const data = {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>prenom1: fd.get("prenom1"),</p>
+<p class="p1"><span class="Apple-converted-space">    </span>prenom2: fd.get("prenom2"),</p>
+<p class="p1"><span class="Apple-converted-space">    </span>email: fd.get("email"),</p>
+<p class="p1"><span class="Apple-converted-space">    </span>optionCadre: document.getElementById("frame").checked,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>prixTotal: document.getElementById("frame").checked ? "59€" : "19€",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>photos: photosData,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>etapes: [...stepsDiv.children].map((s,i)=&gt;({</p>
+<p class="p1"><span class="Apple-converted-space">      </span>numero:i+1,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>lieu:s.querySelector("input").value,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>description:s.querySelector("textarea").value</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}))</p>
+<p class="p1"><span class="Apple-converted-space">  </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById("submit").disabled = true;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>await fetch(GOOGLE_SCRIPT_URL, {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>method:"POST",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>headers:{ "Content-Type":"text/plain;charset=utf-8" },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body:JSON.stringify(data)</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* ✅ REDIRECTION STRIPE (SIMPLE &amp; FIABLE) */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const stripeUrl = document.getElementById("frame").checked ? STRIPE_59 : STRIPE_19;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>window.location.href = stripeUrl + "?prefilled_email=" + encodeURIComponent(data.email);</p>
+<p class="p1">};</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
 </body>
 </html>

@@ -6,11 +6,7 @@
     <title>LoveMap - Votre histoire d'amour transformée en œuvre d'art unique</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --primary: #D4816E;
@@ -27,11 +23,7 @@
             line-height: 1.6;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
 
         header {
             text-align: center;
@@ -51,11 +43,7 @@
             letter-spacing: 2px;
         }
 
-        .subtitle {
-            font-size: 1.4em;
-            font-weight: 300;
-            opacity: 0.95;
-        }
+        .subtitle { font-size: 1.4em; font-weight: 300; opacity: 0.95; }
 
         .artist-badge {
             display: inline-block;
@@ -99,15 +87,9 @@
             transition: transform 0.3s;
         }
 
-        .gallery-item:hover {
-            transform: translateY(-10px);
-        }
+        .gallery-item:hover { transform: translateY(-10px); }
 
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
         .gallery-overlay {
             position: absolute;
@@ -134,11 +116,7 @@
             font-size: 2.3em;
         }
 
-        .info-box ul {
-            list-style: none;
-            padding-left: 0;
-            margin-top: 25px;
-        }
+        .info-box ul { list-style: none; padding-left: 0; margin-top: 25px; }
 
         .info-box li {
             padding: 12px 0;
@@ -185,16 +163,9 @@
             padding-bottom: 12px;
         }
 
-        .form-group {
-            margin-bottom: 25px;
-        }
+        .form-group { margin-bottom: 25px; }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--dark);
-        }
+        label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--dark); }
 
         input[type="text"],
         input[type="email"],
@@ -210,18 +181,13 @@
             transition: border-color 0.3s;
         }
 
-        input:focus,
-        select:focus,
-        textarea:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(212, 129, 110, 0.1);
         }
 
-        textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
+        textarea { min-height: 100px; resize: vertical; }
 
         .photo-upload {
             border: 3px dashed var(--light-gray);
@@ -238,16 +204,9 @@
             background-color: rgba(212, 129, 110, 0.05);
         }
 
-        .photo-upload input[type="file"] {
-            display: none;
-        }
+        .photo-upload input[type="file"] { display: none; }
 
-        .upload-text {
-            font-size: 1.2em;
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
+        .upload-text { font-size: 1.2em; color: var(--primary); font-weight: 600; margin-bottom: 10px; }
 
         .photo-preview {
             display: grid;
@@ -264,11 +223,7 @@
             box-shadow: 0 3px 15px rgba(0,0,0,0.1);
         }
 
-        .photo-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .photo-item img { width: 100%; height: 100%; object-fit: cover; }
 
         .photo-item button {
             position: absolute;
@@ -307,11 +262,7 @@
             margin-bottom: 18px;
         }
 
-        .step-number {
-            font-weight: 600;
-            color: var(--secondary);
-            font-size: 1.15em;
-        }
+        .step-number { font-weight: 600; color: var(--secondary); font-size: 1.15em; }
 
         .remove-step {
             background: transparent;
@@ -325,10 +276,7 @@
             font-weight: 500;
         }
 
-        .remove-step:hover {
-            background: var(--primary);
-            color: white;
-        }
+        .remove-step:hover { background: var(--primary); color: white; }
 
         .add-step-btn {
             background: var(--secondary);
@@ -344,28 +292,13 @@
             margin-top: 10px;
         }
 
-        .add-step-btn:hover {
-            background: #7a8c6d;
-            transform: translateY(-3px);
-        }
+        .add-step-btn:hover { background: #7a8c6d; transform: translateY(-3px); }
 
-        .add-step-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        .add-step-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 18px;
-        }
+        .checkbox-group { display: flex; align-items: center; gap: 12px; margin-top: 18px; }
 
-        .checkbox-group input[type="checkbox"] {
-            width: 22px;
-            height: 22px;
-            cursor: pointer;
-        }
+        .checkbox-group input[type="checkbox"] { width: 22px; height: 22px; cursor: pointer; }
 
         .conditional-field {
             margin-top: 18px;
@@ -391,14 +324,9 @@
             letter-spacing: 1px;
         }
 
-        .submit-btn:hover:not(:disabled) {
-            transform: translateY(-5px);
-        }
+        .submit-btn:hover:not(:disabled) { transform: translateY(-5px); }
 
-        .submit-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
+        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
         .error-message {
             background: #ffe0e0;
@@ -410,12 +338,7 @@
             font-weight: 500;
         }
 
-        .help-text {
-            font-size: 0.95em;
-            color: #666;
-            margin-top: 8px;
-            font-style: italic;
-        }
+        .help-text { font-size: 0.95em; color: #666; margin-top: 8px; font-style: italic; }
 
         @media (max-width: 768px) {
             h1 { font-size: 2.8em; }
@@ -617,97 +540,79 @@
             STRIPE_PAYMENT_LINK_59: 'https://buy.stripe.com/3cI00kgvwceb91LcSu5kk01'
         };
 
+        function showError(message) {
+            const errorContainer = document.getElementById('error-container');
+            errorContainer.innerHTML = `<div class="error-message">${message}</div>`;
+            errorContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => errorContainer.innerHTML = '', 6000);
+        }
+
         let uploadedPhotos = [];
         const photoInput = document.getElementById('photo-input');
         const photoPreview = document.getElementById('photo-preview');
         const photoUploadArea = document.getElementById('photo-upload-area');
 
         photoUploadArea.addEventListener('click', () => photoInput.click());
-        
+
         photoInput.addEventListener('change', async (e) => {
             const files = Array.from(e.target.files);
-            
+
             if (uploadedPhotos.length + files.length > 4) {
                 showError('Maximum 4 photos');
+                photoInput.value = '';
                 return;
             }
 
             for (const file of files) {
-                if (!file.type.startsWith('image/')) continue;
+                if (!file.type.startsWith('image/')) {
+                    showError('Seules les images sont acceptées');
+                    continue;
+                }
                 const data = await compressImage(file);
-                uploadedPhotos.push({ name: file.name, data });
+                uploadedPhotos.push({ name: file.name || 'photo.jpg', data });
             }
+
             displayPhotos();
             photoInput.value = '';
         });
 
-        async function compressImage(file) {
+        async function compressImage(file, maxSize = 1600, quality = 0.82) {
             const img = new Image();
             img.src = URL.createObjectURL(file);
             await img.decode();
+
             const canvas = document.createElement('canvas');
-            const ratio = Math.min(1600 / img.width, 1600 / img.height, 1);
-            canvas.width = img.width * ratio;
-            canvas.height = img.height * ratio;
-            canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-            return canvas.toDataURL('image/jpeg', 0.8);
+            const ratio = Math.min(maxSize / img.width, maxSize / img.height, 1);
+            canvas.width = Math.round(img.width * ratio);
+            canvas.height = Math.round(img.height * ratio);
+
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            const dataUrl = canvas.toDataURL('image/jpeg', quality);
+            URL.revokeObjectURL(img.src);
+            return dataUrl;
         }
 
         function displayPhotos() {
             photoPreview.innerHTML = uploadedPhotos.map((photo, index) => `
                 <div class="photo-item">
                     <img src="${photo.data}" alt="${photo.name}">
-                    <button type="button" onclick="removePhoto(${index})">×</button>
+                    <button type="button" data-index="${index}">×</button>
                 </div>
             `).join('');
-        }
 
-        function removePhoto(index) {
-            uploadedPhotos.splice(index, 1);
-            displayPhotos();
+            photoPreview.querySelectorAll('button[data-index]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const i = parseInt(btn.getAttribute('data-index'), 10);
+                    uploadedPhotos.splice(i, 1);
+                    displayPhotos();
+                });
+            });
         }
 
         const stepsContainer = document.getElementById('steps-container');
         const addStepBtn = document.getElementById('add-step-btn');
-        let stepCount = 0;
-
-        function createStep() {
-            stepCount++;
-            const stepDiv = document.createElement('div');
-            stepDiv.className = 'step-item';
-            stepDiv.dataset.stepId = stepCount;
-            stepDiv.innerHTML = `
-                <div class="step-header">
-                    <span class="step-number">Étape ${stepCount}</span>
-                    ${stepCount > 3 ? '<button type="button" class="remove-step" onclick="removeStep(' + stepCount + ')">Supprimer</button>' : ''}
-                </div>
-                <div class="form-group">
-                    <label>Lieu *</label>
-                    <input type="text" name="step-${stepCount}-lieu" required placeholder="Ex: Paris, France">
-                </div>
-                <div class="form-group">
-                    <label>Que s'est-il passé ici ? *</label>
-                    <textarea name="step-${stepCount}-description" required placeholder="Ex: Notre première rencontre..."></textarea>
-                </div>
-            `;
-            stepsContainer.appendChild(stepDiv);
-            updateAddStepButton();
-        }
-
-        function removeStep(stepId) {
-            const stepElement = stepsContainer.querySelector(`[data-step-id="${stepId}"]`);
-            stepElement.remove();
-            renumberSteps();
-            updateAddStepButton();
-        }
-
-        function renumberSteps() {
-            const steps = stepsContainer.querySelectorAll('.step-item');
-            stepCount = steps.length;
-            steps.forEach((step, index) => {
-                step.querySelector('.step-number').textContent = `Étape ${index + 1}`;
-            });
-        }
 
         function updateAddStepButton() {
             const currentSteps = stepsContainer.querySelectorAll('.step-item').length;
@@ -715,8 +620,76 @@
             addStepBtn.textContent = currentSteps >= 6 ? '✓ Maximum atteint' : '+ Ajouter une étape';
         }
 
+        function renumberSteps() {
+            const steps = stepsContainer.querySelectorAll('.step-item');
+            steps.forEach((step, index) => {
+                step.querySelector('.step-number').textContent = `Étape ${index + 1}`;
+            });
+        }
+
+        function refreshRemoveButtons() {
+            const steps = stepsContainer.querySelectorAll('.step-item');
+            steps.forEach((step, idx) => {
+                const header = step.querySelector('.step-header');
+                const existing = header.querySelector('.remove-step');
+                if (idx >= 3) {
+                    if (!existing) {
+                        const btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.className = 'remove-step';
+                        btn.textContent = 'Supprimer';
+                        btn.addEventListener('click', () => {
+                            step.remove();
+                            renumberSteps();
+                            refreshRemoveButtons();
+                            updateAddStepButton();
+                        });
+                        header.appendChild(btn);
+                    }
+                } else {
+                    if (existing) existing.remove();
+                }
+            });
+        }
+
+        function createStep() {
+            const currentSteps = stepsContainer.querySelectorAll('.step-item').length;
+            const nextNumber = currentSteps + 1;
+
+            const stepDiv = document.createElement('div');
+            stepDiv.className = 'step-item';
+            stepDiv.innerHTML = `
+                <div class="step-header">
+                    <span class="step-number">Étape ${nextNumber}</span>
+                    ${nextNumber > 3 ? '<button type="button" class="remove-step">Supprimer</button>' : ''}
+                </div>
+                <div class="form-group">
+                    <label>Lieu *</label>
+                    <input type="text" required placeholder="Ex: Paris, France">
+                </div>
+                <div class="form-group">
+                    <label>Que s'est-il passé ici ? *</label>
+                    <textarea required placeholder="Ex: Notre première rencontre..."></textarea>
+                </div>
+            `;
+
+            const removeBtn = stepDiv.querySelector('.remove-step');
+            if (removeBtn) {
+                removeBtn.addEventListener('click', () => {
+                    stepDiv.remove();
+                    renumberSteps();
+                    refreshRemoveButtons();
+                    updateAddStepButton();
+                });
+            }
+
+            stepsContainer.appendChild(stepDiv);
+            refreshRemoveButtons();
+            updateAddStepButton();
+        }
+
         addStepBtn.addEventListener('click', createStep);
-        for (let i = 0; i < 3; i++) createStep();
+        createStep(); createStep(); createStep();
 
         document.getElementById('has-date').addEventListener('change', (e) => {
             document.getElementById('date-field').style.display = e.target.checked ? 'block' : 'none';
@@ -741,13 +714,6 @@
             submitBtn.textContent = hasFrame ? 'Commander ma LoveMap - 59€' : 'Commander ma LoveMap - 19€';
         }
 
-        function showError(message) {
-            const errorContainer = document.getElementById('error-container');
-            errorContainer.innerHTML = `<div class="error-message">${message}</div>`;
-            errorContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            setTimeout(() => errorContainer.innerHTML = '', 5000);
-        }
-
         const form = document.getElementById('lovemap-form');
         const submitBtn = document.getElementById('submit-btn');
 
@@ -759,10 +725,19 @@
                 return;
             }
 
-            const currentSteps = stepsContainer.querySelectorAll('.step-item').length;
-            if (currentSteps < 3) {
+            const stepEls = stepsContainer.querySelectorAll('.step-item');
+            if (stepEls.length < 3) {
                 showError('Vous devez renseigner au moins 3 étapes');
                 return;
+            }
+
+            for (const step of stepEls) {
+                const lieu = step.querySelector('input[type="text"]')?.value?.trim() || '';
+                const desc = step.querySelector('textarea')?.value?.trim() || '';
+                if (!lieu || !desc) {
+                    showError('Merci de compléter le lieu et la description pour chaque étape');
+                    return;
+                }
             }
 
             submitBtn.disabled = true;
@@ -770,47 +745,47 @@
 
             try {
                 const formData = new FormData(form);
+
+                const hasDate = document.getElementById('has-date').checked;
+                const hasPhrase = document.getElementById('has-phrase').checked;
+                const hasFrame = document.getElementById('has-frame').checked;
+
                 const data = {
-                    prenom1: formData.get('prenom1'),
-                    prenom2: formData.get('prenom2'),
-                    email: formData.get('email'),
-                    dateSpeciale: formData.get('has-date') ? formData.get('date-speciale') : null,
-                    filConducteur: formData.get('fil-conducteur'),
-                    filAutre: formData.get('fil-autre-details'),
-                    style: formData.get('style'),
-                    relation: formData.get('relation'),
-                    phraseFinale: formData.get('has-phrase') ? formData.get('phrase-finale') : null,
-                    optionCadre: formData.get('has-frame') ? 'Oui - Impression encadrée (+40€)' : 'Non - Numérique uniquement',
-                    prixTotal: formData.get('has-frame') ? '59€' : '19€',
+                    prenom1: (formData.get('prenom1') || '').toString().trim(),
+                    prenom2: (formData.get('prenom2') || '').toString().trim(),
+                    email: (formData.get('email') || '').toString().trim(),
+                    dateSpeciale: hasDate ? (formData.get('date-speciale') || '').toString() : '',
+                    filConducteur: (formData.get('fil-conducteur') || '').toString(),
+                    filAutre: (formData.get('fil-autre-details') || '').toString(),
+                    style: (formData.get('style') || '').toString(),
+                    relation: (formData.get('relation') || '').toString(),
+                    phraseFinale: hasPhrase ? (formData.get('phrase-finale') || '').toString() : '',
+                    optionCadre: hasFrame ? 'Oui - Impression encadrée (+40€)' : 'Non - Numérique uniquement',
+                    prixTotal: hasFrame ? '59€' : '19€',
                     etapes: [],
                     photos: uploadedPhotos
                 };
 
-                const steps = stepsContainer.querySelectorAll('.step-item');
-                steps.forEach((step, index) => {
-                    const num = index + 1;
+                stepEls.forEach((step, index) => {
                     data.etapes.push({
-                        numero: num,
-                        lieu: formData.get(`step-${num}-lieu`),
-                        description: formData.get(`step-${num}-description`)
+                        numero: index + 1,
+                        lieu: step.querySelector('input[type="text"]').value.trim(),
+                        description: step.querySelector('textarea').value.trim()
                     });
                 });
 
                 await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify(data)
                 });
 
-                await new Promise(resolve => setTimeout(resolve, 1000));
-
-                const hasFrame = formData.get('has-frame');
                 const stripeLink = hasFrame ? CONFIG.STRIPE_PAYMENT_LINK_59 : CONFIG.STRIPE_PAYMENT_LINK_19;
                 window.location.href = stripeLink + '?prefilled_email=' + encodeURIComponent(data.email);
 
             } catch (error) {
                 console.error('Erreur:', error);
-                showError('Une erreur est survenue');
+                showError('Une erreur est survenue lors de l’envoi. Merci de réessayer.');
                 submitBtn.disabled = false;
                 updateSubmitButton();
             }

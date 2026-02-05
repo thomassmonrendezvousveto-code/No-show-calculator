@@ -1,133 +1,489 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>LoveMap</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LoveMap - Votre histoire d'amour transformée en œuvre d'art unique</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; background:#f5f1e8; padding:20px; }
-    h1 { text-align:center; }
-    .box { background:white; padding:20px; border-radius:10px; max-width:600px; margin:0 auto; }
-    .photo { border:2px dashed #ccc; padding:20px; text-align:center; cursor:pointer; }
-    .preview img { max-width:100px; margin:5px; border-radius:8px; }
-    button { padding:15px; width:100%; font-size:16px; background:#D4816E; color:white; border:none; border-radius:8px; cursor:pointer; }
-    button:disabled { opacity:0.6; }
-    .error { color:red; margin-top:10px; }
-    textarea { width:100%; min-height:70px; }
-    input { width:100%; padding:10px; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    :root { --primary:#D4816E; --secondary:#8B9E7D; --cream:#F5F1E8; --dark:#2C2C2C; --light-gray:#E8E8E8; }
+    body { font-family:'Work Sans',sans-serif; background:var(--cream); color:var(--dark); line-height:1.6; }
+    .container { max-width:800px; margin:0 auto; padding:20px; }
+    header { text-align:center; padding:80px 20px 60px; background:linear-gradient(135deg,var(--primary) 0%,var(--secondary) 100%); color:#fff; margin-bottom:40px; border-radius:0 0 30px 30px; box-shadow:0 10px 40px rgba(0,0,0,.15); }
+    h1 { font-family:'Playfair Display',serif; font-size:4em; margin-bottom:20px; text-shadow:2px 2px 4px rgba(0,0,0,.2); letter-spacing:2px; }
+    .subtitle { font-size:1.4em; font-weight:300; opacity:.95; }
+    .artist-badge { display:inline-block; background:rgba(255,255,255,.2); padding:10px 25px; border-radius:50px; margin-top:20px; font-size:.95em; border:2px solid rgba(255,255,255,.3); }
+
+    .gallery-section, .info-box, .form-section { background:#fff; border-radius:20px; box-shadow:0 5px 30px rgba(0,0,0,.1); margin-bottom:40px; }
+    .gallery-section { padding:50px 30px; text-align:center; }
+    .gallery-section h2 { font-family:'Playfair Display',serif; color:var(--primary); font-size:2.5em; margin-bottom:15px; }
+    .gallery-section p { color:#666; font-size:1.1em; }
+    .gallery-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; margin-top:30px; }
+    .gallery-item { position:relative; border-radius:15px; overflow:hidden; aspect-ratio:3/4; box-shadow:0 5px 20px rgba(0,0,0,.1); transition:transform .3s; }
+    .gallery-item:hover { transform:translateY(-10px); box-shadow:0 10px 30px rgba(0,0,0,.2); }
+    .gallery-item img { width:100%; height:100%; object-fit:cover; }
+    .gallery-overlay { position:absolute; left:0; right:0; bottom:0; padding:20px; color:#fff; background:linear-gradient(to top, rgba(0,0,0,.7), transparent); }
+
+    .info-box { padding:40px; }
+    .info-box h2 { font-family:'Playfair Display',serif; color:var(--primary); margin-bottom:20px; font-size:2.3em; }
+    .info-box p { margin-bottom:15px; font-size:1.15em; line-height:1.8; }
+    .info-box ul { list-style:none; padding-left:0; margin-top:25px; }
+    .info-box li { padding:12px 0 12px 35px; position:relative; font-size:1.1em; }
+    .info-box li:before { content:"✓"; position:absolute; left:0; color:var(--secondary); font-weight:700; font-size:1.3em; }
+    .price-tag { display:inline-block; background:var(--secondary); color:#fff; padding:18px 40px; border-radius:50px; font-size:1.8em; font-weight:600; margin:25px 0; box-shadow:0 5px 20px rgba(139,158,125,.3); }
+
+    .form-section { padding:40px; margin-bottom:30px; }
+    .form-section h3 { font-family:'Playfair Display',serif; color:var(--primary); margin-bottom:25px; font-size:1.9em; border-bottom:2px solid var(--light-gray); padding-bottom:12px; }
+    .form-group { margin-bottom:25px; }
+    label { display:block; margin-bottom:8px; font-weight:500; }
+    input[type="text"], input[type="email"], input[type="date"], select, textarea { width:100%; padding:14px 18px; border:2px solid var(--light-gray); border-radius:10px; font-family:'Work Sans',sans-serif; font-size:1em; transition:border-color .3s; }
+    input:focus, select:focus, textarea:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(212,129,110,.1); }
+    textarea { min-height:120px; resize:vertical; }
+
+    .photo-upload { border:3px dashed var(--light-gray); border-radius:15px; padding:40px; text-align:center; cursor:pointer; background:var(--cream); transition:.3s; }
+    .photo-upload:hover { border-color:var(--primary); background:rgba(212,129,110,.05); }
+    .photo-upload input[type="file"] { display:none; }
+    .upload-text { font-size:1.2em; color:var(--primary); font-weight:600; margin-bottom:10px; }
+    .help-text { font-size:.95em; color:#666; margin-top:8px; font-style:italic; }
+
+    .photo-preview { display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:15px; margin-top:20px; }
+    .photo-item { position:relative; border-radius:15px; overflow:hidden; aspect-ratio:1; box-shadow:0 3px 15px rgba(0,0,0,.1); }
+    .photo-item img { width:100%; height:100%; object-fit:cover; }
+    .photo-item button { position:absolute; top:8px; right:8px; width:35px; height:35px; border-radius:50%; border:none; cursor:pointer; font-size:20px; color:var(--primary); background:rgba(255,255,255,.95); box-shadow:0 2px 10px rgba(0,0,0,.2); transition:.3s; }
+    .photo-item button:hover { background:var(--primary); color:#fff; transform:scale(1.1); }
+
+    .step-item { background:var(--cream); padding:25px; border-radius:15px; margin-bottom:20px; border-left:5px solid var(--secondary); box-shadow:0 2px 10px rgba(0,0,0,.05); }
+    .step-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+    .step-number { font-weight:600; color:var(--secondary); font-size:1.15em; }
+    .remove-step { background:transparent; border:2px solid var(--primary); color:var(--primary); padding:6px 18px; border-radius:8px; cursor:pointer; font-size:.9em; transition:.3s; font-weight:500; }
+    .remove-step:hover { background:var(--primary); color:#fff; transform:translateY(-2px); }
+
+    .add-step-btn { background:var(--secondary); color:#fff; border:none; padding:14px 35px; border-radius:10px; cursor:pointer; font-size:1.05em; font-weight:600; transition:.3s; width:100%; margin-top:10px; box-shadow:0 3px 15px rgba(139,158,125,.2); }
+    .add-step-btn:hover { background:#7a8c6d; transform:translateY(-3px); box-shadow:0 5px 20px rgba(139,158,125,.3); }
+    .add-step-btn:disabled { opacity:.5; cursor:not-allowed; }
+
+    .checkbox-group { display:flex; align-items:center; gap:12px; margin-top:18px; }
+    .checkbox-group input[type="checkbox"] { width:22px; height:22px; cursor:pointer; }
+
+    .conditional-field { margin-top:18px; padding:20px; background:rgba(212,129,110,.05); border-radius:10px; border-left:4px solid var(--primary); }
+
+    .submit-btn { background:linear-gradient(135deg,var(--primary) 0%,var(--secondary) 100%); color:#fff; border:none; padding:22px 60px; border-radius:50px; font-size:1.4em; font-weight:700; cursor:pointer; width:100%; transition:.3s; box-shadow:0 8px 25px rgba(212,129,110,.4); text-transform:uppercase; letter-spacing:1px; }
+    .submit-btn:hover:not(:disabled) { transform:translateY(-5px); box-shadow:0 12px 35px rgba(212,129,110,.5); }
+    .submit-btn:disabled { opacity:.6; cursor:not-allowed; }
+
+    .error-message { background:#ffe0e0; border-left:5px solid #ff4444; padding:18px; border-radius:10px; margin-bottom:25px; color:#cc0000; font-weight:500; }
+
+    @media (max-width:768px){ h1{font-size:2.8em;} .gallery-grid{grid-template-columns:1fr;} .form-section{padding:25px 20px;} }
   </style>
 </head>
 <body>
-<h1>LoveMap</h1>
-<div class="box">
-<form id="form">
-<h3>📸 Photos (1 à 4)</h3>
-<div class="photo" id="photoBox">Clique pour ajouter des photos</div>
-<input type="file" id="photos" accept="image/*" multiple hidden>
-<div class="preview" id="preview"></div>
+  <header>
+    <h1>LoveMap</h1>
+    <p class="subtitle">Votre histoire d'amour transformée en œuvre d'art unique</p>
+    <div class="artist-badge">✨ Créée par une artiste professionnelle ✨</div>
+  </header>
 
-<h3>💑 Infos</h3>
-<input required placeholder="Prénom 1" name="prenom1"><br><br>
-<input required placeholder="Prénom 2" name="prenom2"><br><br>
-<input required type="email" placeholder="Email" name="email"><br><br>
+  <div class="container">
+    <div class="gallery-section">
+      <h2>Exemples de LoveMaps</h2>
+      <p>Découvrez quelques créations réalisées pour nos clients</p>
+      <div class="gallery-grid">
+        <div class="gallery-item"><img src="exemple1.jpg" alt="Exemple LoveMap 1"><div class="gallery-overlay">Style Aquarelle</div></div>
+        <div class="gallery-item"><img src="exemple2.jpg" alt="Exemple LoveMap 2"><div class="gallery-overlay">Style Disney</div></div>
+        <div class="gallery-item"><img src="exemple3.jpg" alt="Exemple LoveMap 3"><div class="gallery-overlay">Option Premium avec Cadre</div></div>
+      </div>
+    </div>
 
-<h3>🗺️ Étapes (min 3)</h3>
-<div id="steps"></div>
-<button type="button" id="addStep">+ Ajouter une étape</button><br><br>
+    <div class="info-box">
+      <h2>Une carte artistique de votre histoire</h2>
+      <p>Racontez-nous votre parcours amoureux et recevez une magnifique carte illustrée à la main par notre artiste professionnelle, qui retrace avec délicatesse les moments clés de votre relation.</p>
+      <ul>
+        <li>Œuvre originale réalisée par une artiste</li>
+        <li>Design personnalisé selon vos souhaits</li>
+        <li>Fichier haute résolution (prêt à imprimer)</li>
+        <li>Livraison rapide sous 1 à 3 jours</li>
+      </ul>
+      <div class="price-tag">19€</div>
+    </div>
 
-<h3>🖼️ Cadre (+40€)</h3>
-<label><input type="checkbox" id="frame"> Oui</label><br><br>
+    <form id="lovemap-form">
+      <div class="form-section">
+        <h3>📸 Vos Photos (1 à 4)</h3>
+        <div class="form-group">
+          <div class="photo-upload" id="photo-upload-area">
+            <input type="file" id="photo-input" accept="image/*" multiple>
+            <p class="upload-text">📷 Cliquez pour ajouter vos photos</p>
+            <p class="help-text">Photos de vous deux, des lieux importants... Maximum 4 photos</p>
+          </div>
+          <div class="photo-preview" id="photo-preview"></div>
+        </div>
+      </div>
 
-<div class="error" id="error"></div><br>
-<button id="submit">Commander</button>
-</form>
-</div>
+      <div class="form-section">
+        <h3>💑 Votre Couple</h3>
+        <div class="form-group">
+          <label for="prenom1">Premier prénom *</label>
+          <input type="text" id="prenom1" name="prenom1" required>
+        </div>
+        <div class="form-group">
+          <label for="prenom2">Deuxième prénom *</label>
+          <input type="text" id="prenom2" name="prenom2" required>
+        </div>
 
-<script>
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwykRH7WsAuH-9F6Ypd3QfclDZhrDE6nH0FVcBZLg36DfNg17IjIz0eRBQeN4NNXTgI/exec";
-const STRIPE_19 = "https://buy.stripe.com/9B68wQ2EG1zx4Lvf0C5kk00";
-const STRIPE_59 = "https://buy.stripe.com/3cI00kgvwceb91LcSu5kk01";
+        <div class="checkbox-group">
+          <input type="checkbox" id="has-date" name="has-date">
+          <label for="has-date" style="margin-bottom:0;">Ajouter une date spéciale sur la carte</label>
+        </div>
+        <div id="date-field" class="conditional-field" style="display:none;">
+          <label for="date-speciale">Date spéciale</label>
+          <input type="date" id="date-speciale" name="date-speciale">
+        </div>
+      </div>
 
-let photosData = [];
-const photosInput = document.getElementById("photos");
-const preview = document.getElementById("preview");
-document.getElementById("photoBox").onclick = () => photosInput.click();
+      <div class="form-section">
+        <h3>🗺️ Les Étapes de Votre Histoire (3 à 6)</h3>
+        <p class="help-text" style="margin-bottom:25px;">Racontez-nous les lieux qui ont marqué votre parcours</p>
+        <div id="steps-container"></div>
+        <button type="button" class="add-step-btn" id="add-step-btn">+ Ajouter une étape</button>
+      </div>
 
-photosInput.onchange = async e => {
-  for (let f of e.target.files) {
-    if (photosData.length >= 4) break;
-    const data = await compress(f);
-    photosData.push({ name: f.name, data });
-  }
-  renderPhotos();
-  photosInput.value = "";
-};
+      <div class="form-section">
+        <h3>🚗 Fil Conducteur Visuel</h3>
+        <div class="form-group">
+          <label for="fil-conducteur">Comment souhaitez-vous voyager sur votre carte ? *</label>
+          <select id="fil-conducteur" name="fil-conducteur" required>
+            <option value="">-- Choisissez un moyen de transport --</option>
+            <option value="voiture">🚗 Voiture</option>
+            <option value="train">🚂 Train</option>
+            <option value="avion">✈️ Avion</option>
+            <option value="velo">🚲 Vélo</option>
+            <option value="bateau">⛵ Bateau</option>
+            <option value="apied">🚶 À pied</option>
+            <option value="autre">✨ Autre moyen (précisez)</option>
+          </select>
+        </div>
+        <div id="fil-autre" class="conditional-field" style="display:none;">
+          <label for="fil-autre-details">Précisez votre moyen de transport</label>
+          <input type="text" id="fil-autre-details" name="fil-autre-details">
+        </div>
+      </div>
 
-function renderPhotos(){
-  preview.innerHTML = photosData.map(p => `<img src="${p.data}">`).join("");
-}
+      <div class="form-section">
+        <h3>🎨 Style Artistique Préféré</h3>
+        <div class="form-group">
+          <label for="style">Quel univers visuel vous attire le plus ? *</label>
+          <select id="style" name="style" required>
+            <option value="">-- Choisissez un style --</option>
+            <option value="aquarelle">🎨 Aquarelle douce et poétique</option>
+            <option value="minimaliste">⚪ Minimaliste et épuré</option>
+            <option value="vintage">📜 Vintage rétro</option>
+            <option value="illustre">🌈 Illustré coloré et joyeux</option>
+            <option value="romantique">💕 Romantique classique</option>
+            <option value="disney">✨ Disney / Conte de fées</option>
+            <option value="manga">🎌 Manga / Anime japonais</option>
+          </select>
+        </div>
+      </div>
 
-async function compress(file){
-  const img = new Image();
-  img.src = URL.createObjectURL(file);
-  await img.decode();
-  const c = document.createElement("canvas");
-  const r = Math.min(1600/img.width,1600/img.height,1);
-  c.width = img.width*r; c.height = img.height*r;
-  c.getContext("2d").drawImage(img,0,0,c.width,c.height);
-  const out = c.toDataURL("image/jpeg",0.8);
-  URL.revokeObjectURL(img.src);
-  return out;
-}
+      <div class="form-section">
+        <h3>❤️ Votre Relation Aujourd'hui</h3>
+        <div class="form-group">
+          <label for="relation">Quelle est votre situation actuelle ? *</label>
+          <select id="relation" name="relation" required>
+            <option value="">-- Votre situation --</option>
+            <option value="oui">💑 Toujours ensemble et heureux !</option>
+            <option value="non">💭 Un beau souvenir à préserver</option>
+          </select>
+        </div>
+      </div>
 
-const stepsDiv = document.getElementById("steps");
-function addStep(){
-  const d = document.createElement("div");
-  d.innerHTML = `<input required placeholder="Lieu"><br>
-  <textarea required placeholder="Description"></textarea><br><br>`;
-  stepsDiv.appendChild(d);
-}
-document.getElementById("addStep").onclick = addStep;
-addStep(); addStep(); addStep();
+      <div class="form-section">
+        <h3>✨ Touche Personnelle (Optionnel)</h3>
+        <div class="checkbox-group">
+          <input type="checkbox" id="has-phrase" name="has-phrase">
+          <label for="has-phrase" style="margin-bottom:0;">Ajouter une phrase ou citation sur la carte</label>
+        </div>
+        <div id="phrase-field" class="conditional-field" style="display:none;">
+          <label for="phrase-finale">Votre message personnel</label>
+          <textarea id="phrase-finale" name="phrase-finale"></textarea>
+        </div>
+      </div>
 
-document.getElementById("form").onsubmit = async (e) => {
-  e.preventDefault();
-  const error = document.getElementById("error");
-  error.textContent = "";
+      <div class="form-section">
+        <h3>📧 Coordonnées de Livraison</h3>
+        <div class="form-group">
+          <label for="email">Votre adresse email *</label>
+          <input type="email" id="email" name="email" required>
+          <p class="help-text">Vous recevrez votre LoveMap en haute résolution à cette adresse sous 1 à 3 jours</p>
+        </div>
+      </div>
 
-  if (photosData.length === 0) { error.textContent="Ajoute au moins une photo"; return; }
-  if (stepsDiv.children.length < 3) { error.textContent="Ajoute au moins 3 étapes"; return; }
+      <div class="form-section" style="border:3px solid var(--primary); background:linear-gradient(135deg, rgba(212,129,110,.05) 0%, rgba(139,158,125,.05) 100%);">
+        <h3>🖼️ Option Premium : Impression Encadrée</h3>
+        <div class="checkbox-group" style="margin-top:0;">
+          <input type="checkbox" id="has-frame" name="has-frame">
+          <label for="has-frame" style="margin-bottom:0; font-size:1.1em; font-weight:600;">Je souhaite recevoir ma LoveMap imprimée dans un joli cadre (+40€)</label>
+        </div>
+        <div id="frame-details" class="conditional-field" style="display:none; margin-top:20px;">
+          <p><strong>Prix total avec cadre : 59€</strong></p>
+        </div>
+      </div>
 
-  const fd = new FormData(e.target);
-  const payload = {
-    prenom1: fd.get("prenom1"),
-    prenom2: fd.get("prenom2"),
-    email: fd.get("email"),
-    optionCadre: document.getElementById("frame").checked ? "Oui" : "Non",
-    prixTotal: document.getElementById("frame").checked ? "59€" : "19€",
-    photos: photosData,
-    etapes: [...stepsDiv.children].map((s,i)=>({
-      numero:i+1,
-      lieu:s.querySelector("input").value,
-      description:s.querySelector("textarea").value
-    }))
-  };
+      <div id="error-container"></div>
+      <button type="submit" class="submit-btn" id="submit-btn">Commander ma LoveMap - 19€</button>
+      <p class="help-text" id="debug-status" style="text-align:center; margin-top:10px; display:none;"></p>
+    </form>
+  </div>
 
-  const btn = document.getElementById("submit");
-  btn.disabled=true; btn.textContent="Enregistrement…";
+  <script>
+    const CONFIG = {
+      GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwDJbcdk8eeiZswIhf62xkJZx4cAwHCF8H7jSaxxKjzJw5h-fW2EkKbjbZjjZoPkOVH/exec',
+      STRIPE_PAYMENT_LINK_19: 'https://buy.stripe.com/9B68wQ2EG1zx4Lvf0C5kk00',
+      STRIPE_PAYMENT_LINK_59: 'https://buy.stripe.com/3cI00kgvwceb91LcSu5kk01'
+    };
 
-  fetch(GOOGLE_SCRIPT_URL,{
-    method:"POST",
-    mode:"no-cors",
-    headers:{ "Content-Type":"text/plain;charset=utf-8" },
-    body:JSON.stringify(payload)
-  });
+    const debugStatus = document.getElementById('debug-status');
+    function setStatus(msg){ debugStatus.style.display='block'; debugStatus.textContent=msg; }
 
-  setTimeout(()=>{
-    const stripeUrl = document.getElementById("frame").checked ? STRIPE_59 : STRIPE_19;
-    window.location.href = stripeUrl + "?prefilled_email=" + encodeURIComponent(payload.email);
-  },500);
-};
-</script>
+    function showError(message){
+      const errorContainer = document.getElementById('error-container');
+      errorContainer.innerHTML = `<div class="error-message">${message}</div>`;
+      errorContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => { errorContainer.innerHTML=''; }, 7000);
+    }
+
+    // Photos
+    let uploadedPhotos = [];
+    const photoInput = document.getElementById('photo-input');
+    const photoPreview = document.getElementById('photo-preview');
+    const photoUploadArea = document.getElementById('photo-upload-area');
+    photoUploadArea.addEventListener('click', () => photoInput.click());
+
+    photoInput.addEventListener('change', async (e) => {
+      const files = Array.from(e.target.files || []);
+      if (uploadedPhotos.length + files.length > 4) { showError('Vous ne pouvez ajouter que 4 photos maximum'); photoInput.value=''; return; }
+      for (const file of files) {
+        if (!file.type.startsWith('image/')) { showError('Seules les images sont acceptées'); continue; }
+        const dataUrl = await compressImage(file, 1400, 0.80);
+        uploadedPhotos.push({ name: file.name || 'photo.jpg', data: dataUrl });
+      }
+      renderPhotos();
+      photoInput.value='';
+    });
+
+    async function compressImage(file, maxSize=1400, quality=0.8){
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+      await img.decode();
+      const canvas = document.createElement('canvas');
+      const ratio = Math.min(maxSize/img.width, maxSize/img.height, 1);
+      canvas.width = Math.round(img.width*ratio);
+      canvas.height = Math.round(img.height*ratio);
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img,0,0,canvas.width,canvas.height);
+      const out = canvas.toDataURL('image/jpeg', quality);
+      URL.revokeObjectURL(img.src);
+      return out;
+    }
+
+    function renderPhotos(){
+      photoPreview.innerHTML = uploadedPhotos.map((p,i)=>`
+        <div class="photo-item">
+          <img src="${p.data}" alt="${p.name}">
+          <button type="button" data-i="${i}">×</button>
+        </div>
+      `).join('');
+      photoPreview.querySelectorAll('button[data-i]').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const i = Number(btn.getAttribute('data-i'));
+          uploadedPhotos.splice(i,1);
+          renderPhotos();
+        });
+      });
+    }
+
+    // Étapes
+    const stepsContainer = document.getElementById('steps-container');
+    const addStepBtn = document.getElementById('add-step-btn');
+
+    function updateAddStepButton(){
+      const n = stepsContainer.querySelectorAll('.step-item').length;
+      addStepBtn.disabled = n >= 6;
+      addStepBtn.textContent = n >= 6 ? "✓ Maximum d'étapes atteint" : "+ Ajouter une étape";
+    }
+    function renumberSteps(){
+      const steps = stepsContainer.querySelectorAll('.step-item');
+      steps.forEach((s,idx)=> s.querySelector('.step-number').textContent = `Étape ${idx+1}`);
+    }
+    function refreshRemoveButtons(){
+      const steps = stepsContainer.querySelectorAll('.step-item');
+      steps.forEach((step, idx)=>{
+        const header = step.querySelector('.step-header');
+        const existing = header.querySelector('.remove-step');
+        if (idx >= 3){
+          if (!existing){
+            const b = document.createElement('button');
+            b.type='button'; b.className='remove-step'; b.textContent='Supprimer';
+            b.addEventListener('click', ()=>{
+              step.remove();
+              renumberSteps(); refreshRemoveButtons(); updateAddStepButton();
+            });
+            header.appendChild(b);
+          }
+        } else {
+          if (existing) existing.remove();
+        }
+      });
+    }
+    function createStep(){
+      const n = stepsContainer.querySelectorAll('.step-item').length + 1;
+      const div = document.createElement('div');
+      div.className='step-item';
+      div.innerHTML = `
+        <div class="step-header">
+          <span class="step-number">Étape ${n}</span>
+          ${n>3 ? '<button type="button" class="remove-step">Supprimer</button>' : ''}
+        </div>
+        <div class="form-group">
+          <label>Lieu *</label>
+          <input type="text" required placeholder="Ex: Paris, France">
+        </div>
+        <div class="form-group">
+          <label>Que s\'est-il passé ici ? *</label>
+          <textarea required placeholder="Ex: Notre première rencontre..."></textarea>
+        </div>
+      `;
+      const rm = div.querySelector('.remove-step');
+      if (rm) rm.addEventListener('click', ()=>{
+        div.remove();
+        renumberSteps(); refreshRemoveButtons(); updateAddStepButton();
+      });
+      stepsContainer.appendChild(div);
+      refreshRemoveButtons(); updateAddStepButton();
+    }
+    addStepBtn.addEventListener('click', createStep);
+    createStep(); createStep(); createStep();
+
+    // Champs conditionnels + prix bouton
+    document.getElementById('has-date').addEventListener('change', e => {
+      document.getElementById('date-field').style.display = e.target.checked ? 'block' : 'none';
+    });
+    document.getElementById('fil-conducteur').addEventListener('change', e => {
+      document.getElementById('fil-autre').style.display = e.target.value === 'autre' ? 'block' : 'none';
+    });
+    document.getElementById('has-phrase').addEventListener('change', e => {
+      document.getElementById('phrase-field').style.display = e.target.checked ? 'block' : 'none';
+    });
+    document.getElementById('has-frame').addEventListener('change', e => {
+      document.getElementById('frame-details').style.display = e.target.checked ? 'block' : 'none';
+      updateSubmitButton();
+    });
+    function updateSubmitButton(){
+      const hasFrame = document.getElementById('has-frame').checked;
+      document.getElementById('submit-btn').textContent = hasFrame ? 'Commander ma LoveMap - 59€' : 'Commander ma LoveMap - 19€';
+    }
+
+    // Submit: sauvegarde Drive AVANT Stripe
+    const form = document.getElementById('lovemap-form');
+    const submitBtn = document.getElementById('submit-btn');
+
+    function buildPayload(){
+      const fd = new FormData(form);
+      const hasDate = document.getElementById('has-date').checked;
+      const hasPhrase = document.getElementById('has-phrase').checked;
+      const hasFrame = document.getElementById('has-frame').checked;
+
+      const stepEls = stepsContainer.querySelectorAll('.step-item');
+      const etapes = [];
+      stepEls.forEach((el, idx) => {
+        etapes.push({
+          numero: idx + 1,
+          lieu: el.querySelector('input').value.trim(),
+          description: el.querySelector('textarea').value.trim()
+        });
+      });
+
+      return {
+        prenom1: (fd.get('prenom1') || '').toString().trim(),
+        prenom2: (fd.get('prenom2') || '').toString().trim(),
+        email: (fd.get('email') || '').toString().trim(),
+        dateSpeciale: hasDate ? (fd.get('date-speciale') || '').toString() : null,
+        filConducteur: (fd.get('fil-conducteur') || '').toString(),
+        filAutre: (fd.get('fil-autre-details') || '').toString(),
+        style: (fd.get('style') || '').toString(),
+        relation: (fd.get('relation') || '').toString(),
+        phraseFinale: hasPhrase ? (fd.get('phrase-finale') || '').toString() : null,
+        optionCadre: hasFrame ? 'Oui - Impression encadrée (+40€)' : 'Non - Numérique uniquement',
+        prixTotal: hasFrame ? '59€' : '19€',
+        etapes,
+        photos: uploadedPhotos
+      };
+    }
+
+    async function saveBeforeStripe(payload){
+      const json = JSON.stringify(payload);
+
+      // 1) Essai beacon (le + fiable au moment de quitter la page)
+      try {
+        const blob = new Blob([json], { type:'text/plain;charset=utf-8' });
+        const ok = navigator.sendBeacon(CONFIG.GOOGLE_SCRIPT_URL, blob);
+        if (ok) return true;
+      } catch(_) {}
+
+      // 2) Fallback no-cors (évite les blocages CORS Apps Script)
+      try {
+        await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+          method:'POST',
+          mode:'no-cors',
+          body: json,
+          keepalive: true
+        });
+        return true; // on ne peut pas lire la réponse, mais l’envoi part.
+      } catch(e) {
+        return false;
+      }
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (uploadedPhotos.length === 0) { showError('Veuillez ajouter au moins 1 photo'); return; }
+
+      const stepEls = stepsContainer.querySelectorAll('.step-item');
+      if (stepEls.length < 3) { showError('Vous devez renseigner au moins 3 étapes'); return; }
+
+      for (const el of stepEls){
+        const lieu = el.querySelector('input').value.trim();
+        const desc = el.querySelector('textarea').value.trim();
+        if (!lieu || !desc) { showError('Merci de compléter le lieu et la description pour chaque étape'); return; }
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = '⏳ Sauvegarde en cours...';
+      setStatus('Sauvegarde en cours (avant paiement)...');
+
+      const payload = buildPayload();
+      const saved = await saveBeforeStripe(payload);
+
+      if (!saved){
+        showError("Impossible d'enregistrer votre commande (Drive). Vérifiez le déploiement Google Apps Script.");
+        submitBtn.disabled = false;
+        updateSubmitButton();
+        setStatus("Échec sauvegarde.");
+        return;
+      }
+
+      setStatus("Sauvegarde envoyée → redirection paiement...");
+      submitBtn.textContent = '✅ Redirection vers le paiement...';
+
+      const hasFrame = document.getElementById('has-frame').checked;
+      const stripeLink = hasFrame ? CONFIG.STRIPE_PAYMENT_LINK_59 : CONFIG.STRIPE_PAYMENT_LINK_19;
+
+      setTimeout(() => {
+        window.location.href = stripeLink + '?prefilled_email=' + encodeURIComponent(payload.email);
+      }, 350);
+    });
+  </script>
 </body>
 </html>

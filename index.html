@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LoveMap - Votre histoire d'amour transformée en œuvre d'art unique</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '884845511136241');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=884845511136241&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    
     <style>
         * {
             margin: 0;
@@ -612,7 +631,7 @@
 
     <script>
         const CONFIG = {
-            GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycby-x7bZzUlcSHis7Wed5Gpv3eRSurEGYLyu1YqNcgYXyD3u_Z8UEmf0qIys-1psPN4h/exec',
+            GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwDJbcdk8eeiZswIhf62xkJZx4cAwHCF8H7jSaxxKjzJw5h-fW2EkKbjbZjjZoPkOVH/exec',
             STRIPE_PAYMENT_LINK_19: 'https://buy.stripe.com/9B68wQ2EG1zx4Lvf0C5kk00',
             STRIPE_PAYMENT_LINK_59: 'https://buy.stripe.com/3cI00kgvwceb91LcSu5kk01'
         };
@@ -650,6 +669,15 @@
             canvas.width = img.width * ratio;
             canvas.height = img.height * ratio;
             canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+            
+            // Track photo upload
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'AddToCart', {
+                    content_name: 'LoveMap Photo Upload',
+                    content_category: 'Customization'
+                });
+            }
+            
             return canvas.toDataURL('image/jpeg', 0.8);
         }
 
@@ -767,6 +795,19 @@
 
             submitBtn.disabled = true;
             submitBtn.textContent = '⏳ Envoi en cours...';
+            
+            // Track form submission (InitiateCheckout)
+            const hasFrame = formData.get('has-frame');
+            const price = hasFrame ? 59 : 19;
+            
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'InitiateCheckout', {
+                    content_name: 'LoveMap',
+                    content_category: 'Art personnalisé',
+                    value: price,
+                    currency: 'EUR'
+                });
+            }
 
             try {
                 const formData = new FormData(form);
@@ -796,6 +837,9 @@
                     });
                 });
 
+                console.log('📦 Données à envoyer:', data);
+                console.log('🚀 URL:', CONFIG.GOOGLE_SCRIPT_URL);
+
                 // ✅ MÉTHODE CHATGPT QUI FONCTIONNE
                 const response = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
                     method: 'POST',
@@ -803,20 +847,38 @@
                     body: JSON.stringify(data)
                 });
 
+                console.log('📡 Response status:', response.status);
+                console.log('📡 Response ok:', response.ok);
+
                 const result = await response.text();
+                console.log('📄 Response text:', result);
+
                 const json = JSON.parse(result);
+                console.log('✅ JSON parsé:', json);
                 
                 if (!json.ok) {
                     throw new Error(json.message || 'Erreur lors de l\'enregistrement');
                 }
 
+                // ✅ Track Purchase event
+                if (typeof fbq !== 'undefined') {
+                    fbq('track', 'Purchase', {
+                        content_name: 'LoveMap' + (hasFrame ? ' avec Cadre' : ''),
+                        content_type: 'product',
+                        value: price,
+                        currency: 'EUR'
+                    });
+                }
+
                 // ✅ REDIRECTION STRIPE
-                const hasFrame = formData.get('has-frame');
                 const stripeLink = hasFrame ? CONFIG.STRIPE_PAYMENT_LINK_59 : CONFIG.STRIPE_PAYMENT_LINK_19;
+                console.log('💳 Redirection vers:', stripeLink);
                 window.location.href = stripeLink + '?prefilled_email=' + encodeURIComponent(data.email);
 
             } catch (error) {
-                console.error('Erreur:', error);
+                console.error('❌ ERREUR COMPLÈTE:', error);
+                console.error('❌ Message:', error.message);
+                console.error('❌ Stack:', error.stack);
                 showError(error.message || 'Une erreur est survenue');
                 submitBtn.disabled = false;
                 updateSubmitButton();

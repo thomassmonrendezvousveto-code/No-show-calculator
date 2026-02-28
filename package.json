@@ -1,0 +1,13 @@
+{
+  "name": "mrvv-sav",
+  "version": "2.0.0",
+  "description": "SAV ticketing MonRendezVousVeto — avec réception email Sendgrid + Supabase",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'static site, nothing to build'"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.43.0"
+  }
+}
